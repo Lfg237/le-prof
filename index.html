@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Site éducatif interactif</title>
+<style>
+body {font-family: Arial,sans-serif; margin:0; padding:0; color:#fff; text-align:center; background-size:400% 400%; animation: gradientBG 15s ease infinite;}
+@keyframes gradientBG {
+0%{background: linear-gradient(45deg, #ff0000, #ff9900);}
+25%{background: linear-gradient(45deg, #ff9900, #33cc33);}
+50%{background: linear-gradient(45deg, #33cc33, #3399ff);}
+75%{background: linear-gradient(45deg, #3399ff, #9900ff);}
+100%{background: linear-gradient(45deg, #9900ff, #ff0000);}
+}
+header, footer {background:rgba(0,0,0,0.6); padding:10px;}
+.clock {float:right; font-size:14px;}
+nav {display:none; background:rgba(0,0,0,0.7); padding:10px;}
+nav a {display:block; color:#fff; padding:5px; text-decoration:none;}
+nav a:hover {background:#555;}
+.hamburger {cursor:pointer; font-size:24px;}
+.question-box {margin:20px auto; max-width:600px; padding:20px; background:rgba(0,0,0,0.6); border-radius:12px;}
+button {margin:5px; padding:10px 15px; border:none; border-radius:6px; cursor:pointer;}
+.popup {position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); display:none; justify-content:center; align-items:center;}
+.popup-content {background:#fff; color:#000; padding:20px; border-radius:10px; max-width:400px;}
+.score-box {margin:15px; font-size:18px;}
+.user-id {font-size:14px; color:#aaa; margin-bottom:10px;}
+label {margin-right:10px;}
+select {margin:5px; padding:5px 10px;}
+</style>
+</head>
+<body>
+
+<header>
+<span class="hamburger" onclick="toggleMenu()">☰ Menu</span>
+<span class="clock" id="clock"></span>
+<h1 id="title">📚 Site éducatif interactif</h1>
+</header>
+
+<nav id="menu">
+<a href="#" id="menuHome">Accueil</a>
+<a href="#" id="menuLevels">Niveaux</a>
+<a href="#" id="menuSubjects">Matières</a>
+</nav>
+
+<main>
+<h2 id="settingsTitle">Paramètres de l’utilisateur</h2>
+
+<label id="langLabel">Choisir la langue :</label>
+<select id="languageSelect" onchange="updateUI()">
+<option value="fr">Français</option>
+<option value="en">Anglais</option>
+<option value="ar">Arabe</option>
+<option value="es">Espagnol</option>
+</select>
+<br><br>
+
+<label id="levelLabel">Choisir le niveau :</label>
+<select id="levelSelect">
+<option value="cm1">Primaire (CM1)</option>
+<option value="cm2">Primaire (CM2)</option>
+<option value="6">6ème</option>
+<option value="5">5ème</option>
+<option value="4">4ème</option>
+<option value="3">3ème</option>
+<option value="2">2nde</option>
+<option value="1">1ère</option>
+<option value="T">Terminale</option>
+<option value="etudiant">Étudiant</option>
+<option value="autre">Autre</option>
+</select>
+
+<label id="subjectLabel">Choisir la matière :</label>
+<select id="subjectSelect">
+<option>Maths</option>
+<option>Physique</option>
+<option>Chimie</option>
+<option>Biologie</option>
+<option>Histoire</option>
+<option>Géographie</option>
+<option>Technologie</option>
+<option>Morale</option>
+<option>Dessin</option>
+</select>
+
+<div class="score-box">
+<span id="scoreLabel">Score :</span> <span id="score">0</span> pts
+</div>
+
+<div class="user-id">
+<span id="userIdLabel">ID Utilisateur :</span> <span id="userId"></span>
+<br>
+<button onclick="clearHistory()">🗑️ Vider l’historique</button>
+<button onclick="showHistory()">📜 Afficher l’historique</button>
+</div>
+
+<div class="question-box" id="questionBox">
+<p id="question">Cliquez sur "Nouvelle question" pour commencer</p>
+<div id="answers"></div>
+<button id="newQuestionBtn" onclick="nextQuestion()">Nouvelle question</button>
+</div>
+</main>
+
+<footer>
+<p>© 2025 Mon site éducatif - Animations et apprentissage 🎨</p>
+</footer>
+
+<div class="popup" id="popup">
+<div class="popup-content">
+<p id="popupText"></p>
+<button onclick="closePopup()">Fermer</button>
+</div>
+</div>
+
+<script>
+// --- VARIABLES ---
+let score = 0;
+let currentQ = null;
+
+// --- ID UTILISATEUR LOCAL ---
+let userId = localStorage.getItem("userId");
+if(!userId){
+  userId = "USER-" + Math.random().toString(36).substr(2,8);
+  localStorage.setItem("userId", userId);
+}
+document.getElementById("userId").innerText = userId;
+
+// --- SCORE ---
+function updateScore(){
+  document.getElementById("score").innerText = score;
+}
+
+// --- LANGUE INTERFACE ---
+const translationsUI = {
+fr:{title:"📚 Site éducatif interactif",lang:"Choisir la langue :",level:"Choisir le niveau :",subject:"Choisir la matière :",newQuestion:"Nouvelle question",score:"Score",userId:"ID Utilisateur",correct:"✅ Correct !",wrong:"❌ Faux ! La bonne réponse est : ",placeholder:"Cliquez sur 'Nouvelle question' pour commencer",menuHome:"Accueil",menuLevels:"Niveaux",menuSubjects:"Matières",settings:"Paramètres de l’utilisateur"},
+en:{title:"📚 Interactive Educational Site",lang:"Select language:",level:"Select level:",subject:"Select subject:",newQuestion:"New Question",score:"Score",userId:"User ID",correct:"✅ Correct!",wrong:"❌ Wrong! Correct answer: ",placeholder:"Click 'New Question' to start",menuHome:"Home",menuLevels:"Levels",menuSubjects:"Subjects",settings:"User Settings"},
+ar:{title:"📚 الموقع التعليمي التفاعلي",lang:"اختر اللغة:",level:"اختر المستوى:",subject:"اختر المادة:",newQuestion:"سؤال جديد",score:"النتيجة",userId:"معرّف المستخدم",correct:"✅ صحيح!",wrong:"❌ خطأ! الإجابة الصحيحة: ",placeholder:"اضغط على 'سؤال جديد' للبدء",menuHome:"الرئيسية",menuLevels:"المستويات",menuSubjects:"المواد",settings:"إعدادات المستخدم"},
+es:{title:"📚 Sitio Educativo Interactivo",lang:"Seleccionar idioma:",level:"Seleccionar nivel:",subject:"Seleccionar materia:",newQuestion:"Nueva Pregunta",score:"Puntuación",userId:"ID Usuario",correct:"✅ ¡Correcto!",wrong:"❌ ¡Incorrecto! La respuesta correcta: ",placeholder:"Haz clic en 'Nueva Pregunta' para empezar",menuHome:"Inicio",menuLevels:"Niveles",menuSubjects:"Materias",settings:"Configuración del Usuario"}
+};
+
+function updateUI(){
+  let lang = document.getElementById('languageSelect').value;
+  document.getElementById("title").innerText = translationsUI[lang].title;
+  document.getElementById("langLabel").innerText = translationsUI[lang].lang;
+  document.getElementById("levelLabel").innerText = translationsUI[lang].level;
+  document.getElementById("subjectLabel").innerText = translationsUI[lang].subject;
+  document.getElementById("newQuestionBtn").innerText = translationsUI[lang].newQuestion;
+  document.getElementById("scoreLabel").innerText = translationsUI[lang].score + " :";
+  document.getElementById("userIdLabel").innerText = translationsUI[lang].userId + " :";
+  document.getElementById("question").innerText = translationsUI[lang].placeholder;
+  document.getElementById("menuHome").innerText = translationsUI[lang].menuHome;
+  document.getElementById("menuLevels").innerText = translationsUI[lang].menuLevels;
+  document.getElementById("menuSubjects").innerText = translationsUI[lang].menuSubjects;
+  document.getElementById("settingsTitle").innerText = translationsUI[lang].settings;
+}
+
+// --- HORLOGE ---
+function updateClock(){ document.getElementById("clock").innerText = new Date().toUTCString(); }
+setInterval(updateClock,1000); updateClock();
+
+// --- MENU ---
+function toggleMenu(){
+  let m=document.getElementById("menu"); 
+  m.style.display = m.style.display==="block"?"none":"block";
+}
+
+// --- QUESTIONS LOCALES SIMPLE ---
+function generateLocalQuestion(){
+  let level = document.getElementById("levelSelect").value;
+  let subject = document.getElementById("subjectSelect").value;
+  let x=Math.floor(Math.random()*10), y=Math.floor(Math.random()*10);
+  return {q:`${subject} (${level}): Combien font ${x}+${y}?`, options:[x+y, x+y+1, x+y-1], a:x+y};
+}
+
+// --- TRADUCTION LOCALE SIMPLE ---
+function translateQuestion(q, lang){
+  if(lang==="en") return q.replace("Combien font","How much is");
+  if(lang==="ar") return q.replace("Combien font","كم يساوي");
+  if(lang==="es") return q.replace("Combien font","Cuánto es");
+  return q;
+}
+function translateOption(opt, lang){
+  if(typeof opt !== "string") return opt;
+  if(lang==="en") return opt;
+  if(lang==="ar") return opt;
+  if(lang==="es") return opt;
+  return opt;
+}
+
+// --- GESTION QUESTION ---
+async function nextQuestion(){
+  let lang = document.getElementById('languageSelect').value;
+  currentQ = generateLocalQuestion();
+  currentQ.q = translateQuestion(currentQ.q, lang);
+  document.getElementById("question").innerText = currentQ.q;
+  let ansDiv=document.getElementById("answers");
+  ansDiv.innerHTML="";
+  for(let opt of currentQ.options){
+    let btn = document.createElement("button");
+    btn.textContent = translateOption(opt, lang);
+    btn.onclick = ()=> checkAnswer(opt, lang);
+    ansDiv.appendChild(btn);
+  }
+}
+
+// --- HISTORIQUE ---
+function saveHistory(question, answer, correct){
+  let hist = JSON.parse(localStorage.getItem("history") || "[]");
+  hist.push({question, answer, correct});
+  localStorage.setItem("history", JSON.stringify(hist));
+}
+
+function showHistory(){
+  let hist = JSON.parse(localStorage.getItem("history") || "[]");
+  if(hist.length === 0){
+    alert("Aucun historique disponible");
+    return;
+  }
+  let text = hist.map((h,i)=>`${i+1}. ${h.question} | Réponse: ${h.answer} | ${h.correct ? "✅" : "❌"}`).join("\n");
+  alert(text);
+}
+
+function clearHistory(){
+  if(confirm("Voulez-vous vraiment vider l’historique ?")){
+    localStorage.removeItem("history");
+    score = 0;
+    updateScore();
+    document.getElementById("question").innerText = translationsUI[document.getElementById('languageSelect').value].placeholder;
+    document.getElementById("answers").innerHTML = "";
+    document.getElementById("popup").style.display = "none";
+  }
+}
+
+// --- CHECK REPONSE ---
+function checkAnswer(choice, lang){
+  let correct = choice == currentQ.a;
+  if(correct){score++; updateScore(); alert(translationsUI[lang].correct);}
+  else{document.getElementById("popupText").innerText = translationsUI[lang].wrong + currentQ.a; document.getElementById("popup").style.display="flex";}
+  saveHistory(currentQ.q, choice, correct);
+}
+
+function closePopup(){document.getElementById("popup").style.display="none";}
+
+// --- INIT ---
+updateUI();
+</script>
+</body>
+</html>
