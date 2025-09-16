@@ -3,252 +3,260 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Quiz éducatif payant</title>
+<title>Quiz Interactif Éducatif</title>
 <style>
-body { font-family: Arial, sans-serif; margin:0; padding:20px; text-align:center; background:#1e3c72; color:#fff; }
-select, button, input { padding:10px; margin:10px; border-radius:8px; border:none; font-size:16px; }
-button { background:#ff9800; color:#fff; cursor:pointer; }
-button:hover { background:#e68900; }
-.iframe-container { position:relative; width:100%; max-width:500px; min-height:600px; padding-bottom:70%; height:0; overflow:hidden; border-radius:15px; margin:20px auto; }
-.iframe-container iframe { position:absolute; top:0; left:0; width:100%; height:100%; border:none; }
-#quizSection { margin-top:20px; max-width:600px; width:100%; background:rgba(0,0,0,0.3); padding:20px; border-radius:15px; display:none; }
-#paymentSection { display:none; }
-#countdown { font-weight:bold; margin-top:10px; color:yellow; }
-#result { font-weight:bold; margin-top:10px; }
+body { font-family: Arial,sans-serif; margin:0; padding:0; background: linear-gradient(-45deg,#1e3c72,#2a5298,#f6d365,#fda085); background-size:400% 400%; animation: gradientBG 15s ease infinite; color:#fff; }
+@keyframes gradientBG {0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+header { text-align:center; padding:20px; }
+#datetime { font-size:1.1em; margin-top:5px; }
+main { max-width:700px; margin:0 auto; padding:20px; background:rgba(0,0,0,0.4); border-radius:15px; }
+section { margin-bottom:20px; padding:15px; background:rgba(255,255,255,0.1); border-radius:10px; }
+select, button, input { padding:10px; margin-top:10px; border:none; border-radius:10px; font-weight:bold; }
+button { background:#ff7f50; color:#fff; cursor:pointer; transition:0.3s; }
+button:hover { background:#ff4500; transform:scale(1.05); }
+input { width:60%; margin-right:10px; }
+#quizContainer { margin-top:20px; }
+#result { font-weight:bold; font-size:1.2em; margin-top:10px; }
+.correct { color:lightgreen; animation: blink 0.5s; }
+.incorrect { color:orange; animation: blink 0.5s; }
+@keyframes blink { 0%{opacity:0.2} 50%{opacity:1} 100%{opacity:0.2} }
+
+/* Popup mauvaise réponse */
+#wrongAnswerPopup {
+  display:none; position:fixed; top:0; left:0; width:100%; height:100%; 
+  background:rgba(0,0,0,0.7); justify-content:center; align-items:center; z-index:1000;
+}
+#wrongAnswerPopup div {
+  background:#fff; color:#000; padding:20px; border-radius:10px; max-width:400px; text-align:center;
+}
+#wrongAnswerPopup button {
+  padding:10px 20px; border:none; border-radius:10px; background:#ff7f50; color:#fff; cursor:pointer;
+}
 </style>
 </head>
 <body>
 
-<h1>📚 Quiz éducatif interactif</h1>
+<header>
+<h1 id="siteTitle">📚 Quiz Interactif</h1>
+<p id="datetime"></p>
+<label id="langLabel" for="langSelect">Langue :</label>
+<select id="langSelect" onchange="updateLanguage()">
+  <option value="fr">Français</option>
+  <option value="en">English</option>
+  <option value="es">Español</option>
+  <option value="ar">العربية</option>
+</select>
+</header>
 
-<!-- Choix -->
-<div id="setupSection">
-  <h2>Choisissez vos options</h2>
-  <label>Classe :</label>
-  <select id="classSelect">
-    <option value="CM2">CM2</option>
-  </select><br>
+<main>
+<section id="selection">
+<h2 id="selectTitle">Choisir Classe et Matière</h2>
+<label id="classeLabel" for="classeSelect">Classe :</label>
+<select id="classeSelect">
+  <option value="">--Choisir une classe--</option>
+  <option value="CM2">CM2</option>
+  <option value="6ème">6ème</option>
+  <option value="5ème">5ème</option>
+  <option value="4ème">4ème</option>
+  <option value="3ème">3ème</option>
+</select>
+<label id="matiereLabel" for="matiereSelect">Matière :</label>
+<select id="matiereSelect">
+  <option value="">--Choisir une matière--</option>
+  <option value="Mathématiques">Mathématiques</option>
+  <option value="Français">Français</option>
+  <option value="Sciences">Sciences</option>
+  <option value="Histoire">Histoire</option>
+</select>
+</section>
 
-  <label>Matière :</label>
-  <select id="subjectSelect">
-    <option value="math">Mathématiques</option>
-    <option value="francais">Français</option>
-    <option value="sciences">Sciences</option>
-    <option value="histoire">Histoire</option>
-  </select><br>
+<section id="coursSection">
+<h2 id="coursTitle">💡 Cours</h2>
+<div id="coursList"></div>
+</section>
 
-  <label>Langue :</label>
-  <select id="langSelect">
-    <option value="fr">Français</option>
-    <option value="en">English</option>
-    <option value="es">Español</option>
-    <option value="ar">العربية</option>
-  </select><br>
-
-  <button onclick="startQuiz()">Commencer</button>
-</div>
-
-<!-- Quiz -->
-<div id="quizSection">
-  <h2 id="quizTitle"></h2>
-  <div id="questionContainer"></div>
-  <input type="text" id="answerInput" placeholder="Votre réponse">
-  <button onclick="submitAnswer()">Répondre</button>
+<section id="quizSection">
+<h2 id="quizTitle">📝 Question</h2>
+<div id="quizContainer">
+  <p id="questionText"></p>
+  <input type="text" id="answerInput" placeholder="">
+  <button id="answerBtn" onclick="submitAnswer()">Répondre</button>
   <p id="result"></p>
 </div>
+</section>
+</main>
 
-<!-- Paiement -->
-<div id="paymentSection">
-  <h2>⚠️ Accès bloqué</h2>
-  <p>Veuillez payer pour continuer. Accès valable 24h.</p>
-  <div class="iframe-container">
-    <iframe src="https://www.my-coolpay.com/pay/ciWsFgwN"></iframe>
+<footer>
+&copy; 2025 Mon Site Éducatif
+</footer>
+
+<div id="wrongAnswerPopup">
+  <div>
+    <p id="correctAnswerText"></p>
+    <button onclick="closeWrongAnswerPopup()">Fermer</button>
   </div>
-  <p>Après paiement, copiez la ligne contenant <b>ID de transaction externe</b> :</p>
-  <input type="text" id="paymentIDInput" placeholder="Ex : ID de transaction externe : 8a983ada-fb85-4af7-a3bc-06e281369afc">
-  <button onclick="verifyPayment()">Valider le paiement</button>
-  <p id="paymentMsg" style="color:red;"></p>
-  <p id="countdown"></p>
 </div>
 
 <script>
-// ← Nombre de questions gratuites avant paiement
-let maxFreeQuestions = 2; // ← Modifie ce chiffre facilement
+// --- Heure locale ---
+function updateDateTime(){
+  const now = new Date();
+  document.getElementById('datetime').innerText = now.toLocaleDateString('fr-FR',{weekday:'long',year:'numeric',month:'long',day:'numeric'})+' | '+now.toLocaleTimeString('fr-FR');
+}
+setInterval(updateDateTime,1000);
+updateDateTime();
 
-let currentQuestions = [];
-let currentIndex = 0;
-let answeredCount = 0;
-let paymentValidated = false;
+// --- Mémoire locale ---
+let answeredCount = parseInt(localStorage.getItem("answeredCount")) || 0;
+let lastActivity = localStorage.getItem("lastActivity") || null;
 
-// Banque de questions CM2
-const questionsBank = {
-  CM2: {
-    math: {
-      fr: [
-        { q: "Combien font 7 × 8 ?", a: "56" },
-        { q: "Combien font 12 ÷ 3 ?", a: "4" },
-        { q: "Résous : 15 + 9", a: "24" }
-      ]
-    },
-    francais: {
-      fr: [
-        { q: "Quel est le synonyme de 'rapide' ?", a: "vite" },
-        { q: "Complète : Le chat ___ sur le mur.", a: "saute" },
-        { q: "Quel est l'antonyme de 'grand' ?", a: "petit" }
-      ]
-    },
-    sciences: {
-      fr: [
-        { q: "Quel gaz respirons-nous pour vivre ?", a: "oxygène" },
-        { q: "Combien a-t-on de sens ?", a: "5" },
-        { q: "Quelle étoile éclaire la Terre ?", a: "soleil" }
-      ]
-    },
-    histoire: {
-      fr: [
-        { q: "Qui a découvert l'Amérique ?", a: "colomb" },
-        { q: "En quelle année la Révolution française a-t-elle commencé ?", a: "1789" },
-        { q: "Quel pharaon est célèbre pour sa tombe intacte ?", a: "toutankhamon" }
-      ]
-    }
-  }
+// --- Paramètre blocage et paiement ---
+const MAX_QUESTIONS_BEFORE_PAYMENT = 2; // facile à changer
+
+// --- Données ---
+const coursData = {
+"CM2":{"Mathématiques":["Addition","Soustraction"],"Français":["Grammaire","Lecture"],"Sciences":["Animaux","Plantes"],"Histoire":["Préhistoire","Antiquité"]},
+"6ème":{"Mathématiques":["Nombres","Géométrie"],"Français":["Grammaire","Lecture"],"Sciences":["Animaux","Plantes"],"Histoire":["Préhistoire","Antiquité"]},
+"5ème":{"Mathématiques":["Fractions","Décimaux"],"Français":["Orthographe","Poésie"],"Sciences":["Physique","Chimie"],"Histoire":["Moyen-Âge","Renaissance"]},
+"4ème":{"Mathématiques":["Algèbre","Géométrie"],"Français":["Lecture","Conjugaison"],"Sciences":["Biologie","Physique"],"Histoire":["Révolution","Empire"]},
+"3ème":{"Mathématiques":["Fonctions","Probabilités"],"Français":["Expression","Vocabulaire"],"Sciences":["Chimie","Astronomie"],"Histoire":["Époque contemporaine","Guerres mondiales"]}
 };
 
-// Vérifier paiement (24h)
-function checkPaymentValidity() {
-  const paymentTime = localStorage.getItem("paymentTime");
-  if (paymentTime) {
-    const now = new Date();
-    const diff = now - new Date(paymentTime);
-    if (diff < 24 * 60 * 60 * 1000) {
-      paymentValidated = true;
-      document.getElementById("paymentSection").style.display = "none";
-      return true;
-    } else {
-      localStorage.removeItem("paymentTime");
-      localStorage.removeItem("paymentID");
-    }
-  }
-  return false;
-}
+let currentQuiz = [];
+let currentIndex = 0;
+let questionsDone = answeredCount;
 
-// Mélanger et choisir questions
-function getRandomQuestions(arr, n=3) {
-  let shuffled = arr.sort(() => 0.5 - Math.random());
-  return shuffled.slice(0, n);
-}
+// --- Textes multilingues ---
+const texts = {
+  fr: { siteTitle:"📚 Quiz Interactif", selectTitle:"Choisir Classe et Matière", classe:"Classe :", matiere:"Matière :", coursTitle:"💡 Cours", quizTitle:"📝 Question", answerPlaceholder:"Votre réponse", answerBtn:"Répondre", completeMsg:"🎉 Quiz terminé !"},
+  en: { siteTitle:"📚 Interactive Quiz", selectTitle:"Select Class and Subject", classe:"Class :", matiere:"Subject :", coursTitle:"💡 Lessons", quizTitle:"📝 Question", answerPlaceholder:"Your answer", answerBtn:"Submit", completeMsg:"🎉 Quiz Finished!"},
+  es: { siteTitle:"📚 Quiz Interactivo", selectTitle:"Elegir Clase y Materia", classe:"Clase :", matiere:"Materia :", coursTitle:"💡 Cursos", quizTitle:"📝 Pregunta", answerPlaceholder:"Tu respuesta", answerBtn:"Responder", completeMsg:"🎉 ¡Quiz Terminado!"},
+  ar: { siteTitle:"📚 الاختبار التفاعلي", selectTitle:"اختر الصف والمادة", classe:"الصف :", matiere:"المادة :", coursTitle:"💡 الدروس", quizTitle:"📝 السؤال", answerPlaceholder:"إجابتك", answerBtn:"أجب", completeMsg:"🎉 انتهى الاختبار!"}
+};
 
-// Démarrer quiz
-function startQuiz() {
-  const classe = document.getElementById("classSelect").value;
-  const matiere = document.getElementById("subjectSelect").value;
-  const langue = document.getElementById("langSelect").value;
+// --- Traductions des questions ---
+const translations = {
+  "Combien font 12 + 8 ?": { en:"How much is 12 + 8?", es:"¿Cuánto es 12 + 8?", ar:"كم يساوي 12 + 8؟" },
+  "Combien font 15 - 7 ?": { en:"How much is 15 - 7?", es:"¿Cuánto es 15 - 7?", ar:"كم يساوي 15 - 7؟" },
+  "Synonyme de 'rapide' ?": { en:"Synonym of 'rapide'?", es:"Sinónimo de 'rápido'?", ar:"مرادف 'سريع'؟" },
+  "Pluriel de 'cheval' ?": { en:"Plural of 'cheval'?", es:"Plural de 'caballo'?", ar:"جمع 'حصان'؟" }
+  // Ajouter d'autres questions ici avec leur traduction
+};
 
-  if (!questionsBank[classe] || !questionsBank[classe][matiere] || !questionsBank[classe][matiere][langue]) {
-    alert("Pas de questions disponibles pour ce choix.");
-    return;
-  }
+// --- Fonctions ---
+document.getElementById('classeSelect').addEventListener('change', startQuizIfSelected);
+document.getElementById('matiereSelect').addEventListener('change', startQuizIfSelected);
 
-  currentQuestions = getRandomQuestions(questionsBank[classe][matiere][langue]);
+function startQuizIfSelected(){
+  const classe = document.getElementById('classeSelect').value;
+  const matiere = document.getElementById('matiereSelect').value;
+  if(!classe || !matiere) return;
+
+  const coursList = document.getElementById('coursList');
+  coursList.innerHTML = "";
+  (coursData[classe][matiere]||[]).forEach(c => { const div=document.createElement('div'); div.innerText=c; coursList.appendChild(div); });
+
+  currentQuiz = generateQuiz(classe, matiere);
   currentIndex = 0;
-  answeredCount = 0;
-
-  document.getElementById("quizTitle").textContent = `Quiz ${classe} - ${matiere}`;
-  document.getElementById("setupSection").style.display = "none";
-  document.getElementById("quizSection").style.display = "block";
-
-  showNextQuestion();
+  showQuestion();
 }
 
-// Afficher question suivante
-function showNextQuestion() {
-  if (currentIndex >= currentQuestions.length) {
-    document.getElementById("result").textContent = "🎉 Fin du quiz de cette session.";
+function generateQuiz(classe, matiere){
+  const quizBank = {
+    "CM2": {
+      "Mathématiques": [
+        {q: "Combien font 12 + 8 ?", a: "20"},
+        {q: "Combien font 15 - 7 ?", a: "8"}
+      ],
+      "Français": [
+        {q: "Synonyme de 'rapide' ?", a: "vite"},
+        {q: "Pluriel de 'cheval' ?", a: "chevaux"}
+      ]
+    },
+    "6ème": {
+      "Mathématiques": [
+        {q: "5 + 3 ?", a: "8"},
+        {q: "2 x 4 ?", a: "8"}
+      ],
+      "Français": [
+        {q: "Synonyme de 'grand' ?", a: "haut"},
+        {q: "Antonyme de 'jour' ?", a: "nuit"}
+      ]
+    }
+  };
+  return (quizBank[classe] && quizBank[classe][matiere]) ? quizBank[classe][matiere] : [];
+}
+
+function showQuestion(){
+  if(currentIndex >= currentQuiz.length){
+    document.getElementById('quizContainer').innerHTML = texts[document.getElementById('langSelect').value].completeMsg;
     return;
   }
-  document.getElementById("questionContainer").innerText = currentQuestions[currentIndex].q;
-  document.getElementById("answerInput").value = "";
-  document.getElementById("result").innerText = "";
+  const lang = document.getElementById('langSelect').value;
+  const q = currentQuiz[currentIndex].q;
+  document.getElementById('questionText').innerText = (translations[q] && translations[q][lang]) ? translations[q][lang] : q;
+  document.getElementById('answerInput').value = "";
+  document.getElementById('answerInput').placeholder = texts[lang].answerPlaceholder;
+  document.getElementById('answerBtn').innerText = texts[lang].answerBtn;
+  document.getElementById('result').innerText = "";
 }
 
-// Soumettre réponse
-function submitAnswer() {
-  const ans = document.getElementById("answerInput").value.trim().toLowerCase();
-  const correct = currentQuestions[currentIndex].a.toLowerCase();
+function submitAnswer(){
+  const answer = document.getElementById('answerInput').value.trim().toLowerCase();
+  const correct = currentQuiz[currentIndex].a.toLowerCase();
+  const resultEl = document.getElementById('result');
 
-  if (ans === correct) {
-    document.getElementById("result").innerText = "✅ Correct !";
+  if(answer === correct){
+    resultEl.innerText = "✅ Correct !";
+    resultEl.className = "correct";
   } else {
-    document.getElementById("result").innerText = `❌ Incorrect ! Réponse : ${currentQuestions[currentIndex].a}`;
+    resultEl.innerText = "❌ Incorrect !";
+    resultEl.className = "incorrect";
+    document.getElementById('correctAnswerText').innerText = `La bonne réponse est : ${currentQuiz[currentIndex].a}`;
+    document.getElementById('wrongAnswerPopup').style.display = "flex";
   }
 
-  answeredCount++;
   currentIndex++;
+  questionsDone++;
 
-  // Vérifier si le paiement est requis
-  if (!paymentValidated && answeredCount >= maxFreeQuestions) {
-    document.getElementById("quizSection").style.display = "none";
-    document.getElementById("paymentSection").style.display = "block";
+  // --- Sauvegarde mémoire ---
+  localStorage.setItem("answeredCount", questionsDone);
+  localStorage.setItem("lastActivity", new Date().toISOString());
+
+  // --- Vérifier si on atteint le blocage ---
+  if(questionsDone >= MAX_QUESTIONS_BEFORE_PAYMENT){
+    document.getElementById('quizContainer').innerHTML = `
+      <p>🎉 Vous avez atteint ${MAX_QUESTIONS_BEFORE_PAYMENT} questions !</p>
+      <p>Pour continuer le quiz, veuillez effectuer le paiement.</p>
+      <iframe src="https://www.my-coolpay.com/pay/ciWsFgwN" 
+              style="width:100%; height:600px; border:none;"></iframe>
+    `;
   } else {
-    setTimeout(showNextQuestion, 1000); // Passer à la question suivante après 1s
+    setTimeout(showQuestion, 1000);
   }
 }
 
-// Vérifier paiement avec extraction de l'ID
-function verifyPayment() {
-  const msg = document.getElementById("paymentIDInput").value.trim();
-  const paymentMsg = document.getElementById("paymentMsg");
-
-  // Extraction de l'ID de transaction externe
-  const match = msg.match(/ID de transaction externe\s*:\s*([a-z0-9-]+)/i);
-  
-  if(match) {
-    const transactionID = match[1];
-    paymentValidated = true;
-    localStorage.setItem("paymentTime", new Date().toISOString());
-    localStorage.setItem("paymentID", transactionID);
-    
-    document.getElementById("paymentSection").style.display = "none";
-    document.getElementById("quizSection").style.display = "block";
-    startCountdown();
-    showNextQuestion();
-    paymentMsg.textContent = "";
-  } else {
-    paymentValidated = false;
-    paymentMsg.textContent = "⚠️ ID de paiement non reconnu. Copiez la ligne 'ID de transaction externe' du message MyCoolPay.";
-  }
+function closeWrongAnswerPopup(){
+  document.getElementById('wrongAnswerPopup').style.display = "none";
 }
 
-// Compte à rebours 24h
-function startCountdown() {
-  const endTime = new Date(localStorage.getItem("paymentTime"));
-  endTime.setHours(endTime.getHours() + 24);
-
-  function updateCountdown() {
-    const now = new Date();
-    const diff = endTime - now;
-
-    if (diff <= 0) {
-      document.getElementById("countdown").textContent = "⏳ Temps expiré, veuillez repayer.";
-      localStorage.removeItem("paymentTime");
-      localStorage.removeItem("paymentID");
-      paymentValidated = false;
-      return;
-    }
-
-    const hours = Math.floor(diff / (1000 * 60 * 60));
-    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-    document.getElementById("countdown").textContent =
-      `Temps restant : ${hours}h ${minutes}m ${seconds}s`;
-    setTimeout(updateCountdown, 1000);
-  }
-  updateCountdown();
+function updateLanguage(){
+  const lang = document.getElementById('langSelect').value;
+  document.getElementById('siteTitle').innerText = texts[lang].siteTitle;
+  document.getElementById('selectTitle').innerText = texts[lang].selectTitle;
+  document.getElementById('classeLabel').innerText = texts[lang].classe;
+  document.getElementById('matiereLabel').innerText = texts[lang].matiere;
+  document.getElementById('coursTitle').innerText = texts[lang].coursTitle;
+  document.getElementById('quizTitle').innerText = texts[lang].quizTitle;
+  document.getElementById('answerInput').placeholder = texts[lang].answerPlaceholder;
+  document.getElementById('answerBtn').innerText = texts[lang].answerBtn;
 }
 
-// Si paiement déjà validé
-if (checkPaymentValidity()) startCountdown();
+// --- Dernière activité ---
+if(lastActivity){
+  const last = new Date(lastActivity);
+  console.log("Dernière activité enregistrée :", last.toLocaleString());
+}
 </script>
 
 </body>
