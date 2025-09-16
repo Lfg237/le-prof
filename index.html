@@ -32,6 +32,9 @@ input { width:60%; margin-right:10px; }
 #wrongAnswerPopup button {
   padding:10px 20px; border:none; border-radius:10px; background:#ff7f50; color:#fff; cursor:pointer;
 }
+
+/* Iframe paiement */
+#paymentFrame { display:none; width:100%; height:400px; border:none; margin-top:20px; }
 </style>
 </head>
 <body>
@@ -55,18 +58,11 @@ input { width:60%; margin-right:10px; }
 <select id="classeSelect">
   <option value="">--Choisir une classe--</option>
   <option value="CM2">CM2</option>
-  <option value="6ème">6ème</option>
-  <option value="5ème">5ème</option>
-  <option value="4ème">4ème</option>
-  <option value="3ème">3ème</option>
 </select>
 <label id="matiereLabel" for="matiereSelect">Matière :</label>
 <select id="matiereSelect">
   <option value="">--Choisir une matière--</option>
   <option value="Mathématiques">Mathématiques</option>
-  <option value="Français">Français</option>
-  <option value="Sciences">Sciences</option>
-  <option value="Histoire">Histoire</option>
 </select>
 </section>
 
@@ -83,6 +79,11 @@ input { width:60%; margin-right:10px; }
   <button id="answerBtn" onclick="submitAnswer()">Répondre</button>
   <p id="result"></p>
 </div>
+<button id="continueBtn" style="display:none;" onclick="showPayment()">Payer pour continuer</button>
+<iframe id="paymentFrame" src="https://www.my-coolpay.com/pay/ciWsFgwN"></iframe>
+<label for="paymentIdInput">ID de transaction :</label>
+<input type="text" id="paymentIdInput" placeholder="Coller l'ID ici">
+<button onclick="verifyPayment()">Vérifier</button>
 </section>
 </main>
 
@@ -98,35 +99,20 @@ input { width:60%; margin-right:10px; }
 </div>
 
 <script>
-// --- Heure locale ---
+// Heure et date
 function updateDateTime(){
   const now = new Date();
   document.getElementById('datetime').innerText = now.toLocaleDateString('fr-FR',{weekday:'long',year:'numeric',month:'long',day:'numeric'})+' | '+now.toLocaleTimeString('fr-FR');
 }
 setInterval(updateDateTime,1000);
-updateDateTime();
 
-// --- Mémoire locale ---
-let answeredCount = parseInt(localStorage.getItem("answeredCount")) || 0;
-let lastActivity = localStorage.getItem("lastActivity") || null;
-
-// --- Paramètre blocage et paiement ---
-const MAX_QUESTIONS_BEFORE_PAYMENT = 2; // facile à changer
-
-// --- Données ---
-const coursData = {
-"CM2":{"Mathématiques":["Addition","Soustraction"],"Français":["Grammaire","Lecture"],"Sciences":["Animaux","Plantes"],"Histoire":["Préhistoire","Antiquité"]},
-"6ème":{"Mathématiques":["Nombres","Géométrie"],"Français":["Grammaire","Lecture"],"Sciences":["Animaux","Plantes"],"Histoire":["Préhistoire","Antiquité"]},
-"5ème":{"Mathématiques":["Fractions","Décimaux"],"Français":["Orthographe","Poésie"],"Sciences":["Physique","Chimie"],"Histoire":["Moyen-Âge","Renaissance"]},
-"4ème":{"Mathématiques":["Algèbre","Géométrie"],"Français":["Lecture","Conjugaison"],"Sciences":["Biologie","Physique"],"Histoire":["Révolution","Empire"]},
-"3ème":{"Mathématiques":["Fonctions","Probabilités"],"Français":["Expression","Vocabulaire"],"Sciences":["Chimie","Astronomie"],"Histoire":["Époque contemporaine","Guerres mondiales"]}
-};
-
+// Données
+const coursData = { "CM2":{"Mathématiques":["Addition","Soustraction"]} };
 let currentQuiz = [];
 let currentIndex = 0;
-let questionsDone = answeredCount;
+let MAX_QUESTIONS_BEFORE_PAYMENT = 2;
 
-// --- Textes multilingues ---
+// Textes multilingues
 const texts = {
   fr: { siteTitle:"📚 Quiz Interactif", selectTitle:"Choisir Classe et Matière", classe:"Classe :", matiere:"Matière :", coursTitle:"💡 Cours", quizTitle:"📝 Question", answerPlaceholder:"Votre réponse", answerBtn:"Répondre", completeMsg:"🎉 Quiz terminé !"},
   en: { siteTitle:"📚 Interactive Quiz", selectTitle:"Select Class and Subject", classe:"Class :", matiere:"Subject :", coursTitle:"💡 Lessons", quizTitle:"📝 Question", answerPlaceholder:"Your answer", answerBtn:"Submit", completeMsg:"🎉 Quiz Finished!"},
@@ -134,16 +120,44 @@ const texts = {
   ar: { siteTitle:"📚 الاختبار التفاعلي", selectTitle:"اختر الصف والمادة", classe:"الصف :", matiere:"المادة :", coursTitle:"💡 الدروس", quizTitle:"📝 السؤال", answerPlaceholder:"إجابتك", answerBtn:"أجب", completeMsg:"🎉 انتهى الاختبار!"}
 };
 
-// --- Traductions des questions ---
-const translations = {
-  "Combien font 12 + 8 ?": { en:"How much is 12 + 8?", es:"¿Cuánto es 12 + 8?", ar:"كم يساوي 12 + 8؟" },
-  "Combien font 15 - 7 ?": { en:"How much is 15 - 7?", es:"¿Cuánto es 15 - 7?", ar:"كم يساوي 15 - 7؟" },
-  "Synonyme de 'rapide' ?": { en:"Synonym of 'rapide'?", es:"Sinónimo de 'rápido'?", ar:"مرادف 'سريع'؟" },
-  "Pluriel de 'cheval' ?": { en:"Plural of 'cheval'?", es:"Plural de 'caballo'?", ar:"جمع 'حصان'؟" }
-  // Ajouter d'autres questions ici avec leur traduction
-};
+// Quiz multilingue
+const quizBank = { 
+  "CM2": { 
+    "Mathématiques":[
+      {q:{fr:"Combien font 7 + 5 ?", en:"What is 7 + 5?", es:"¿Cuánto es 7 + 5?", ar:"كم يساوي 7 + 5؟"}, a:"12"},
+      {q:{fr:"Combien font 2 + 3 ?", en:"What is 2 + 3?", es:"¿Cuánto es 2 + 3?", ar:"كم يساوي 2 + 3؟"}, a:"5"},
+      {q:{fr:"Combien font 10 - 4 ?", en:"What is 10 - 4?", es:"¿Cuánto es 10 - 4?", ar:"كم يساوي 10 - 4؟"}, a:"6"},
+      {q:{fr:"Combien font 3 x 2 ?", en:"What is 3 x 2?", es:"¿Cuánto es 3 x 2?", ar:"كم يساوي 3 × 2؟"}, a:"6"}
+    ] 
+  } 
+};  
 
-// --- Fonctions ---
+// Sauvegarde et récupération mémoire locale
+function saveState(){
+  const state = {
+    currentIndex: currentIndex,
+    lang: document.getElementById('langSelect').value,
+    paymentDone: document.getElementById('paymentFrame').style.display === "none"
+  };
+  localStorage.setItem('quizState', JSON.stringify(state));
+}
+function loadState(){
+  const saved = JSON.parse(localStorage.getItem('quizState'));
+  if(saved){
+    currentIndex = saved.currentIndex || 0;
+    document.getElementById('langSelect').value = saved.lang || 'fr';
+    updateLanguage();
+    if(saved.paymentDone){
+      document.getElementById('paymentFrame').style.display = "none";
+      document.getElementById('continueBtn').style.display = "none";
+    } else if(currentIndex >= MAX_QUESTIONS_BEFORE_PAYMENT){
+      document.getElementById('quizContainer').style.display = "none";
+      document.getElementById('continueBtn').style.display = "block";
+    }
+  }
+}
+
+// Démarrer quiz
 document.getElementById('classeSelect').addEventListener('change', startQuizIfSelected);
 document.getElementById('matiereSelect').addEventListener('change', startQuizIfSelected);
 
@@ -156,51 +170,31 @@ function startQuizIfSelected(){
   coursList.innerHTML = "";
   (coursData[classe][matiere]||[]).forEach(c => { const div=document.createElement('div'); div.innerText=c; coursList.appendChild(div); });
 
-  currentQuiz = generateQuiz(classe, matiere);
-  currentIndex = 0;
+  currentQuiz = quizBank[classe][matiere];
   showQuestion();
 }
 
-function generateQuiz(classe, matiere){
-  const quizBank = {
-    "CM2": {
-      "Mathématiques": [
-        {q: "Combien font 12 + 8 ?", a: "20"},
-        {q: "Combien font 15 - 7 ?", a: "8"}
-      ],
-      "Français": [
-        {q: "Synonyme de 'rapide' ?", a: "vite"},
-        {q: "Pluriel de 'cheval' ?", a: "chevaux"}
-      ]
-    },
-    "6ème": {
-      "Mathématiques": [
-        {q: "5 + 3 ?", a: "8"},
-        {q: "2 x 4 ?", a: "8"}
-      ],
-      "Français": [
-        {q: "Synonyme de 'grand' ?", a: "haut"},
-        {q: "Antonyme de 'jour' ?", a: "nuit"}
-      ]
-    }
-  };
-  return (quizBank[classe] && quizBank[classe][matiere]) ? quizBank[classe][matiere] : [];
-}
-
 function showQuestion(){
+  saveState();
   if(currentIndex >= currentQuiz.length){
     document.getElementById('quizContainer').innerHTML = texts[document.getElementById('langSelect').value].completeMsg;
     return;
   }
+  if(currentIndex === MAX_QUESTIONS_BEFORE_PAYMENT){
+    document.getElementById('quizContainer').style.display = "none";
+    document.getElementById('continueBtn').style.display = "block";
+    return;
+  }
   const lang = document.getElementById('langSelect').value;
-  const q = currentQuiz[currentIndex].q;
-  document.getElementById('questionText').innerText = (translations[q] && translations[q][lang]) ? translations[q][lang] : q;
+  document.getElementById('questionText').innerText = currentQuiz[currentIndex].q[lang];
   document.getElementById('answerInput').value = "";
   document.getElementById('answerInput').placeholder = texts[lang].answerPlaceholder;
   document.getElementById('answerBtn').innerText = texts[lang].answerBtn;
+  document.getElementById('quizContainer').style.display= "block";
   document.getElementById('result').innerText = "";
 }
 
+// Soumission réponse
 function submitAnswer(){
   const answer = document.getElementById('answerInput').value.trim().toLowerCase();
   const correct = currentQuiz[currentIndex].a.toLowerCase();
@@ -217,29 +211,17 @@ function submitAnswer(){
   }
 
   currentIndex++;
-  questionsDone++;
+  saveState();
 
-  // --- Sauvegarde mémoire ---
-  localStorage.setItem("answeredCount", questionsDone);
-  localStorage.setItem("lastActivity", new Date().toISOString());
-
-  // --- Vérifier si on atteint le blocage ---
-  if(questionsDone >= MAX_QUESTIONS_BEFORE_PAYMENT){
-    document.getElementById('quizContainer').innerHTML = `
-      <p>🎉 Vous avez atteint ${MAX_QUESTIONS_BEFORE_PAYMENT} questions !</p>
-      <p>Pour continuer le quiz, veuillez effectuer le paiement.</p>
-      <iframe src="https://www.my-coolpay.com/pay/ciWsFgwN" 
-              style="width:100%; height:600px; border:none;"></iframe>
-    `;
-  } else {
-    setTimeout(showQuestion, 1000);
-  }
+  setTimeout(showQuestion, 1000);
 }
 
+// Fermer popup mauvaise réponse
 function closeWrongAnswerPopup(){
   document.getElementById('wrongAnswerPopup').style.display = "none";
 }
 
+// Multilingue
 function updateLanguage(){
   const lang = document.getElementById('langSelect').value;
   document.getElementById('siteTitle').innerText = texts[lang].siteTitle;
@@ -250,14 +232,33 @@ function updateLanguage(){
   document.getElementById('quizTitle').innerText = texts[lang].quizTitle;
   document.getElementById('answerInput').placeholder = texts[lang].answerPlaceholder;
   document.getElementById('answerBtn').innerText = texts[lang].answerBtn;
+  saveState();
 }
 
-// --- Dernière activité ---
-if(lastActivity){
-  const last = new Date(lastActivity);
-  console.log("Dernière activité enregistrée :", last.toLocaleString());
+// Afficher iframe paiement
+function showPayment(){
+  document.getElementById('paymentFrame').style.display = "block";
+  document.getElementById('continueBtn').style.display = "none";
 }
+
+// Vérification du paiement (simulation)
+function verifyPayment(){
+  const paymentId = document.getElementById('paymentIdInput').value.trim();
+  if(paymentId.length > 0){
+    alert(`Paiement vérifié ! ID : ${paymentId}\nAccès débloqué pour continuer le quiz.`);
+    document.getElementById('paymentFrame').style.display = "none";
+    document.getElementById('quizContainer').style.display = "block";
+    saveState();
+  } else {
+    alert("Veuillez entrer un ID de transaction valide.");
+  }
+}
+
+// Charger l'état sauvegardé au lancement
+window.onload = function(){
+  updateDateTime();
+  loadState();
+};
 </script>
-
 </body>
 </html>
