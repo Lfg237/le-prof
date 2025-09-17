@@ -5,118 +5,38 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Bibliothèque Numérique</title>
 <style>
-/* --- Styles globaux --- */
 body {
   font-family: Arial, sans-serif;
-  margin:0;
-  padding:0;
+  margin:0; padding:0;
   background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #a1c4fd, #c2e9fb);
   background-size: 400% 400%;
   animation: gradientBG 15s ease infinite;
   color: #fff;
 }
-@keyframes gradientBG {
-  0%{background-position:0% 50%}
-  50%{background-position:100% 50%}
-  100%{background-position:0% 50%}
-}
-header {
-  background: rgba(0,0,0,0.6);
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  gap:5px;
-  position: sticky;
-  top:0;
-  z-index:1000;
-}
-nav {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-nav a {
-  margin:0 10px;
-  color:#fff;
-  text-decoration:none;
-  font-weight:bold;
-}
+@keyframes gradientBG {0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+header {background: rgba(0,0,0,0.6); padding: 10px; display:flex; flex-direction:column; gap:5px; position: sticky; top:0; z-index:1000;}
+nav {display:flex; justify-content:space-between; align-items:center;}
+nav a {margin:0 10px; color:#fff; text-decoration:none; font-weight:bold;}
 .clock {font-weight:bold;}
-.user-info {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-.status-btn {
-  padding:5px 10px;
-  border:none;
-  border-radius:5px;
-  font-weight:bold;
-  color:#fff;
-}
+.user-info {display:flex; justify-content:space-between; align-items:center;}
+.status-btn {padding:5px 10px; border:none; border-radius:5px; font-weight:bold; color:#fff;}
 .status-ferme {background:gray;}
 .status-simple {background:green;}
 .status-premium {background:deepskyblue;}
 .status-admin {background:orange;}
-.banner {
-  background: rgba(0,0,0,0.6);
-  overflow:hidden;
-  white-space: nowrap;
-  padding:5px 0;
-}
-.banner span {
-  display: inline-block;
-  padding-left:100%;
-  animation: scrollBanner 15s linear infinite;
-}
-@keyframes scrollBanner {
-  0% {transform: translateX(0);}
-  100% {transform: translateX(-100%);}
-}
+.banner {background: rgba(0,0,0,0.6); overflow:hidden; white-space: nowrap; padding:5px 0;}
+.banner span {display: inline-block; padding-left:100%; animation: scrollBanner 15s linear infinite;}
+@keyframes scrollBanner {0% {transform: translateX(0);} 100% {transform: translateX(-100%);}}
 main {padding:20px;}
 .books {display:grid; grid-template-columns: repeat(auto-fit,minmax(150px,1fr)); gap:20px;}
-.book {
-  background: rgba(0,0,0,0.5);
-  padding:10px;
-  border-radius:10px;
-  cursor:pointer;
-  transition: transform 0.3s;
-}
+.book {background: rgba(0,0,0,0.5); padding:10px; border-radius:10px; cursor:pointer; transition: transform 0.3s;}
 .book:hover {transform: scale(1.05);}
 .pages {margin-top:10px; display:none;}
-.page {
-  background: rgba(255,255,255,0.9);
-  color:#000;
-  padding:15px;
-  margin:5px 0;
-  border-radius:8px;
-  cursor:pointer;
-  transition: background 0.3s;
-}
+.page {background: rgba(255,255,255,0.9); color:#000; padding:15px; margin:5px 0; border-radius:8px; cursor:pointer; transition: background 0.3s;}
 .page:hover {background:#e0e0e0;}
-.popup-bg {
-  position:fixed;
-  top:0; left:0; width:100%; height:100%;
-  background: rgba(0,0,0,0.7);
-  display:none;
-  justify-content:center;
-  align-items:center;
-  z-index:2000;
-}
-.popup {
-  background:#fff;
-  color:#000;
-  padding:20px;
-  border-radius:10px;
-  max-width:300px;
-  text-align:center;
-}
-.admin-table {
-  width:100%;
-  border-collapse:collapse;
-  margin-top:20px;
-  display:none;
-}
+.popup-bg {position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.7); display:none; justify-content:center; align-items:center; z-index:2000;}
+.popup {background:#fff; color:#000; padding:20px; border-radius:10px; max-width:300px; text-align:center;}
+.admin-table {width:100%; border-collapse:collapse; margin-top:20px; display:none;}
 .admin-table th, .admin-table td {border:1px solid #fff; padding:8px;}
 .admin-table th {background:rgba(255,255,255,0.2);}
 </style>
@@ -140,7 +60,7 @@ main {padding:20px;}
 </header>
 
 <div class="banner">
-  <span>🎉 Nouvelle offre premium disponible ! Contactez l'admin pour plus d'infos. 🎉</span>
+  <span>🎉 Préparez vos examens et concours ! Nouvelle offre premium disponible ! Contactez l'admin: what's 651475255 page facebook lesfacilitateurs middleman 🎉</span>
 </div>
 
 <main>
@@ -170,125 +90,964 @@ main {padding:20px;}
 <div class="popup-bg" id="popupBg">
   <div class="popup" id="popupContent">
     <p>Accès réservé aux abonnés !</p>
-    <p>Prix : 500 FCFA / Contact : admin@example.com</p>
+    <p>Prix : 500 xaf/ par semaine acces simple 1livre 
+      5000xaf / semaine acces premium tous les livres Contact admin appel & what's : 651475255 yaounde nyom3 : </p>
     <button onclick="closePopup()">Fermer</button>
   </div>
 </div>
 
 <script>
-  // --- Horloge en direct ---
-  function updateClock() {
-    const now = new Date();
-    document.getElementById('clock').textContent =
-      now.toLocaleDateString('fr-FR') + ' ' + now.toLocaleTimeString('fr-FR');
-  }
-  setInterval(updateClock,1000);
-  updateClock();
+// --- Horloge ---
+function updateClock() {
+  const now = new Date();
+  document.getElementById('clock').textContent =
+    now.toLocaleDateString('fr-FR') + ' ' + now.toLocaleTimeString('fr-FR');
+}
+setInterval(updateClock,1000);
+updateClock();
 
-  // --- Données livres ---
-  const booksData = [
-    {id:0,title:'Livre 1',pages:['Page 1 du Livre 1','Page 2 du Livre 1','Page 3 du Livre 1']},
-    {id:1,title:'Livre 2',pages:['Page 1 du Livre 2','Page 2 du Livre 2']},
-    {id:2,title:'Livre 3',pages:['Page 1 du Livre 3','Page 2 du Livre 3']}
-  ];
+// --- Livres ---
+const booksData = [
+  {id:0, title:"cm1 ", pages:[`⭐ Page 1 du Livre 1 🎉`, `📖 Page 2 du Livre 1`, `🔗 Page 3 du Livre 1 <a href="https://example.com" target="_blank">Clique ici</a>`]},
+  {id:1, title:"cm2", pages:[`⭐ Page 1 du Livre 2`, `📖 Page 2 du Livre 2`, `🔗 Page 3 du Livre 2`] },
+  {id:2, title:"6em", pages:[`⭐ Page 1 du Livre 3`, `📖 Page 2 du Livre 3`, `🔗 Page 3 du Livre 3`] },
+  {id:3, title:"1er année ", pages:[`⭐ Page 1 du Livre 4`, `📖 Page 2 du Livre 4`, `🔗 Page 3 du Livre 4`] },
+  {id:4, title:"5em", pages:[`⭐ Page 1 du Livre 5`, `📖 Page 2 du Livre 5`, `🔗 Page 3 du Livre 5`] },
+  {id:5, title:"2em année", pages:[`⭐ Page 1 du Livre 6`, `📖 Page 2 du Livre 6`, `🔗 Page 3 du Livre 6`] },
+  {id:6, title:"4em", pages:[`⭐ Page 1 du Livre 7`, `📖 Page 2 du Livre 7`, `🔗 Page 3 du Livre 7`] },
+  {id:7, title:"3em année", pages:[`⭐ Page 1 du Livre 8`, `📖 Page 2 du Livre 8`, `🔗 Page 3 du Livre 8`] },
+  {id:8, title:"3em", pages:[`⭐ Page 1 du Livre 9`, `📖 Page 2 du Livre 9`, `🔗 Page 3 du Livre 9`] },
+  {id:9, title:"4em annee", pages:[`⭐ Page 1 du Livre 10`, `📖 Page 2 du Livre 10`, `🔗 Page 3 du Livre 10`] },
+  {id:10, title:"2nd", pages:[`⭐ Super — je reprends les 10 exercices de Seconde et je te fournis les corrections détaillées (pas à pas). Tu peux tout copier-coller directement.
 
-  // --- Données utilisateurs ---
-  let users = [
-    {id:'U1001',type:'premium',start:'01/09/2025',end:'30/09/2025',books:[0]}, 
-    {id:'U1002',type:'simple',start:'01/09/2025',end:'30/09/2025',books:[0]}, 
-    {id:'U1001',type:'admin',start:'01/01/2025',end:'31/12/2030',books:[0,1,2]}
-  ];
 
-  // --- Sélection utilisateur connecté (test) ---
-  let currentUser = users[0]; // Remplacer par login réel
-  document.getElementById('userId').textContent = currentUser.id;
+---
 
-  function updateStatusButton(){
-    const btn = document.getElementById('userStatus');
-    btn.textContent = currentUser.type.toUpperCase();
-    btn.className = 'status-btn ' + 
-      (currentUser.type==='ferme'?'status-ferme':currentUser.type==='simple'?'status-simple':currentUser.type==='premium'?'status-premium':'status-admin');
-  }
-  updateStatusButton();
+Exercices de Mathématiques — Niveau Seconde (énoncés + CORRECTIONS)
 
-  // --- Vérification automatique du statut selon la date ---
-  function updateUserStatus(){
-    const today = new Date();
-    const start = new Date(currentUser.start.split('/').reverse().join('-'));
-    const end = new Date(currentUser.end.split('/').reverse().join('-'));
-    if(currentUser.type!=='admin'){
-      if(today<start || today>end) currentUser.type='ferme';
-    }
-    updateStatusButton();
-  }
-  updateUserStatus();
 
-  // --- Génération des livres ---
-  const booksContainer = document.getElementById('booksContainer');
-  booksData.forEach(book=>{
-    const bookDiv = document.createElement('div');
-    bookDiv.className='book';
-    bookDiv.dataset.bookId=book.id;
-    bookDiv.innerHTML = `<h3>${book.title}</h3><div class="pages"></div>`;
-    booksContainer.appendChild(bookDiv);
+---
 
-    const pagesDiv = bookDiv.querySelector('.pages');
-    book.pages.forEach((p,pageIndex)=>{
-      const pageEl = document.createElement('div');
-      pageEl.className='page';
-      pageEl.textContent = p;
-      pageEl.onclick = (e)=>{
-        e.stopPropagation();
-        if(canAccessBook(currentUser,book.id)){
-          alert(p);
-        } else {
-          showPopup();
-        }
-      };
-      pagesDiv.appendChild(pageEl);
-    });
+Exercice 1 – Équations du premier degré
 
-    bookDiv.onclick = ()=>{
-      document.getElementById('selectedBook').textContent = book.title;
-      pagesDiv.style.display = pagesDiv.style.display==='block'?'none':'block';
-      if(!canAccessBook(currentUser,book.id)) showPopup();
-    };
-  });
+1. Résoudre .
 
-  // --- Vérification accès ---
-  function canAccessBook(user,bookId){
-    if(user.type==='admin' || user.type==='premium') return true;
-    if(user.type==='simple') return user.books.includes(bookId);
-    return false; // fermé
-  }
 
-  // --- Popup ---
-  function showPopup(){document.getElementById('popupBg').style.display='flex';}
-  function closePopup(){document.getElementById('popupBg').style.display='none';}
 
-  // --- Tableau Admin ---
-  const adminPassword = "233233";
-  function adminLogin(){
-    const code = prompt("Entrez le code d'accès administrateur :");
-    if(code===adminPassword){
-      const tbody = document.getElementById('adminTable').querySelector('tbody');
-      tbody.innerHTML = '';
-      users.forEach(u=>{
-        const tr = document.createElement('tr');
-        tr.innerHTML=`<td>${u.id}</td>
-                      <td>${u.type}</td>
-                      <td>${u.start}</td>
-                      <td>${u.end}</td>
-                      <td>${u.books.map(b=>booksData[b].title).join(', ')}</td>`;
-        tbody.appendChild(tr);
-      });
-      document.getElementById('adminTable').style.display='table';
-    } else {
-      alert('Code incorrect !');
-    }
-  }
+Solution :
 
-</script>
+5x-7=3x+9 \\
+5x-3x=9+7 \\
+2x=16 \\
+x=8.
 
-</body>
-</html>
+
+---
+
+2. Résoudre .
+
+
+
+Solution :
+
+7(2x-3)=14x-21 \\
+14x-21 = 4x+11 \\
+14x-4x=11+21 \\
+10x=32 \\
+x=\frac{32}{10}=\frac{16}{5}=3{,}2.
+
+
+---
+
+Exercice 2 – Équation produit nul
+
+Résoudre .
+
+Solution : Produit nul ⇒ au moins un facteur nul.
+
+x-2=0 \Rightarrow x=2;\\
+x+5=0 \Rightarrow x=-5;\\
+3x-7=0 \Rightarrow x=\frac{7}{3}.
+
+
+---
+
+Exercice 3 – Inéquation
+
+Résoudre .
+
+Solution :
+
+3x-4 \le 2x+5 \\
+3x-2x \le 5+4 \\
+x \le 9.
+
+
+---
+
+Exercice 4 – Fonction affine
+
+Soit .
+
+1. Calculer .
+
+
+2. Donner l’ordonnée à l’origine.
+
+Solution :
+L’ordonnée à l’origine est .
+La droite a pente  et intercept .
+
+Réponses :  Ordonnée à l’origine = 
+Exercice 5 – Identités remarquables
+
+Développer et réduire :
+
+1. 
+
+
+2. 
+
+
+3. 
+
+
+
+Solution :
+
+
+Réponses :
+
+Exercice 6 – Équation du second degré
+
+Résoudre .
+
+Solution : Calcul du discriminant 
+Racines :
+
+x = \frac{7 \pm \sqrt{1}}{2} = \frac{7\pm1}{2}.
+
+Réponse :  ou .
+
+
+
+Exercice 7 – Géométrie analytique
+
+Points .
+
+1. Calculer AB et AC.
+
+
+2. Déterminer la nature du triangle ABC (isocèle ? rectangle ?).
+
+
+
+Solution :
+Vecteurs et distances :
+
+\overrightarrow{AB}=(5-1,\ 4-2)=(4,2),\quad AB=\sqrt{4^2+2^2}=\sqrt{16+4}=\sqrt{20}=2\sqrt5\approx4{,}472.
+
+\overrightarrow{AC}=(3-1,\ 8-2)=(2,6),\quad AC=\sqrt{2^2+6^2}=\sqrt{4+36}=\sqrt{40}=2\sqrt{10}\approx6{,}325.  Calculer BC :
+
+\overrightarrow{BC}=(5-3,\ 4-8)=(2,-4),\quad BC=\sqrt{2^2+(-4)^2}=\sqrt{4+16}=\sqrt{20}=2\sqrt5\approx4{,}472.
+
+On constate  donc le triangle est isocèle (les côtés AB et BC égaux).
+
+Vérifons s’il est rectangle : calcul du produit scalaire  :
+
+\overrightarrow{AB}\cdot\overrightarrow{BC} = (4,2)\cdot(2,-4) = 4\cdot2 + 2\cdot(-4) = 8 - 8 = 0.
+
+Conclusion : triangle ABC est isocèle (AB = BC) et rectangle en B.
+
+
+---
+
+Exercice 8 – Statistiques (10 notes)
+
+Données : .
+
+1. Moyenne.
+
+
+2. Médiane.
+
+
+3. Étendue.
+
+
+
+Solution :
+Somme = 
+Moyenne = 
+
+Tri des données croissant : 
+Pour  (pair), médiane = moyenne des 5ᵉ et 6ᵉ valeurs = 
+
+Étendue = max − min = 
+
+Réponses : Moyenne = ; Médiane = ; Étendue = .
+
+
+---
+
+Exercice 9 – Théorème de Pythagore
+
+Triangle rectangle en A : 
+
+1. Calculer .
+
+
+2. Vérifier que le triangle est rectangle en A.
+
+
+
+Solution :
+Si A est l’angle droit, alors  est l’hypoténuse :
+
+BC=\sqrt{AB^2+AC^2}=\sqrt{6^2+8^2}=\sqrt{36+64}=\sqrt{100}=10\ \text{cm}.
+
+Réponse : .
+
+
+---
+
+Exercice 10 – Trigonométrie (triangle rectangle)
+
+Angle aigu . Hypoténuse .
+
+1. Longueur du côté adjacent.
+
+
+2. Longueur du côté opposé.
+
+
+
+Solution :
+Dans un triangle rectangle :
+
+cosinus : .
+
+sinus : .
+
+
+Donc :
+
+\text{adjacent} = 10\cos35^\circ,\quad \text{opposé} = 10\sin35^\circ.
+
+\cos35^\circ \approx 0{,}81915 \Rightarrow \text{adjacent}\approx 10\times0{,}81915 \approx 8{,}19\ \text{cm}.
+
+\sin35^\circ \approx 0{,}57358 \Rightarrow \text{opposé}\approx 10\times0{,}57358 \approx 5{,}74\ \text{cm}. 
+
+Réponses : adjacent ≈ , opposé ≈ 
+
+
+Exercice 11 – Équation du second degré (factorisation)
+
+Énoncé :
+Résoudre dans ℝ : .
+
+Correction :
+Calcul du discriminant 
+Racines : 
+Donc 
+(On peut aussi factoriser : .)
+
+Réponse :  ou .
+
+
+---
+
+Exercice 12 – Système linéaire simple
+
+Énoncé :
+Résoudre le système :
+
+\begin{cases}
+2x + y = 7\\
+x - 2y = -4
+\end{cases}
+
+Correction :
+Isoler x de la 2ᵉ : .
+Remplacer dans la 1ᵉ : 
+Alors 
+
+Réponse : .
+
+
+---
+
+Exercice 13 – Produit scalaire (angle entre vecteurs)
+
+Énoncé :
+Dans le plan,  et .
+
+1. Calculer .
+
+
+2. En déduire la mesure de l’angle  entre  et  (en degrés, arrondir à l’unité).
+
+
+
+Correction :
+
+1. Produit scalaire : 
+
+
+2. Normes : , 
+Cosinus : 
+θ ≈ arccos(−0,1414) ≈ 98°. (≈ 98°)
+
+
+
+Réponse : 
+
+
+---
+
+Exercice 14 – Proportionnalité et pourcentage
+
+Énoncé :
+Un vendeur augmente le prix d’un article de 15 %, puis applique une remise de 10 % sur le nouveau prix. Quel est le pourcentage d’augmentation total (ou la variation nette) par rapport au prix initial ?
+
+Correction :
+Soit prix initial . Après +15 % : . Après −10 % : 
+Variation nette =  d’augmentation.
+
+Réponse : augmentation nette de +3,5 %.
+
+
+---
+
+Exercice 15 – Théorème de Thalès (application)
+
+Énoncé :
+Dans le triangle ABC, une droite parallèle à (BC) coupe (AB) en M et (AC) en N. On sait AM = 3 cm, MB = 6 cm et AN = 4 cm. Calculer NC.
+
+Correction :
+Par Thalès : . AB = AM+MB = 3+6 = 9 cm. So  cm. Donc NC = AC − AN = 12 − 4 = 8 cm.
+
+Réponse : 
+
+
+---
+
+Exercice 16 – Probabilités (tirage sans remise)
+
+Énoncé :
+Une urne contient 4 boules rouges et 6 boules vertes. On tire 2 boules sans remise.
+
+1. Probabilité d’avoir 2 rouges.
+
+
+2. Probabilité d’avoir exactement 1 rouge.
+
+
+
+Correction :
+
+1. 
+
+
+2. Deux cas : R alors V, ou V alors R.   Donc P(exactement 1R)=
+
+
+
+Réponses : 
+
+
+---
+
+Exercice 17 – Fonction quadratique (sommet)
+
+Énoncé :
+Soit .
+
+1. Déterminer le sommet (abscisse et ordonnée).
+
+
+2. Donner l’expression de f(x) sous forme canonique.
+
+
+
+Correction :
+Abscisse du sommet : 
+Ordonnée : 
+Forme canonique :  (on vérifie : 2(x^2 -4x +4) −5 = 2x^2 −8x +8 −5).
+
+Réponse : sommet . Forme canonique 
+
+
+---
+
+Exercice 18 – Statistiques (moyenne pondérée)
+
+Énoncé :
+Un étudiant obtient les notes suivantes : contrôle 1 = 12/20 (coeff. 1), contrôle 2 = 15/20 (coeff. 2), projet = 14/20 (coeff. 3). Calculer la moyenne pondérée.
+
+Correction :
+Calcul : total pondéré =  Somme des coefficients =  Moyenne pondérée = 
+
+Réponse : moyenne = 14/20.
+
+
+---
+
+Exercice 19 – Trigonométrie (aire d’un triangle)
+
+Énoncé :
+Dans un triangle ABC, on donne AB = 7 cm, AC = 9 cm et l’angle . Calculer l’aire du triangle.
+
+Correction :
+Aire = 
+
+Aire = 
+
+Réponse :  ≈ 27,3 cm².
+
+
+---
+
+Exercice 20 – Suites (arithmétique)
+
+Énoncé :
+Suite arithmétique  de premier terme  et de raison .
+
+1. Calculer .
+
+
+2. Calculer la somme .
+
+
+
+Correction :
+
+1. 
+
+
+2. Somme de 7 termes : 
+
+
+
+Réponses : 
+
+
+
+
+
+Maths Seconde — Exercices complexes 21 → 30 (énoncés + corrections)
+
+
+Exercice 21 — Système non trivial
+
+Énoncé :
+Résoudre dans ℝ le système suivant :
+
+\begin{cases}
+x^2 + y = 7\\[4pt]
+x + y^2 = 11
+\end{cases}
+
+Correction :
+Soustraire la 1ᵉ de la 2ᵉ pour éliminer certains termes :
+
+(x + y^2) - (x^2 + y) = 11 - 7 \Rightarrow x - x^2 + y^2 - y = 4.
+
+x=0 → 1ᵉ: 0 + y =7 ⇒ y=7. Tester 2ᵉ: 0 + 49 =49 ≠11 → non.
+
+x=1 → y = 7 −1 =6. 2ᵉ: 1 + 36 =37 ≠11 → non.
+
+x=2 → y = 7 −4 =3. 2ᵉ: 2 + 9 =11 ⇒ OK.
+
+
+Donc (x,y)=(2,3) est solution.
+
+Vérif autres x :
+
+x=−1 → y = 7 −1 =6 → 2ᵉ: −1 + 36 =35 ≠11.
+
+x=3 → y = 7 −9 = −2 → 2ᵉ: 3 + 4 =7 ≠11. Peu probable d’autres réels non entiers : on peut voir que x=2 donne solution et comportement des fonctions suggère unicité.
+Réponse : .
+
+
+(Remarque : on aurait aussi pu substituer y = 7 − x^2 dans la 2ᵉ et résoudre une équation en x :  → polynôme degré 4 ; essais entiers plus rapide.)
+
+
+---
+
+Exercice 22 — Étude et résolution d’équation rationnelle
+
+Énoncé :
+Résoudre dans ℝ :
+
+\frac{2x-1}{x-2} = 3 - \frac{5}{x-2}.
+
+Correction :
+Domaine : x ≠ 2. Mettons tout sur dénominateur commun x−2 :
+
+\frac{2x-1}{x-2} = \frac{3(x-2)}{x-2} - \frac{5}{x-2} = \frac{3x-6-5}{x-2} = \frac{3x-11}{x-2}.
+
+2x-1 = 3x - 11 \Rightarrow -x = -10 \Rightarrow x = 10.
+
+Réponse : .
+
+
+---
+
+Exercice 23 — Géométrie analytique (équation de cercle)
+
+Énoncé :
+Donner l’équation du cercle de centre  passant par le point . Déterminer l’intersection de ce cercle avec l’axe des abscisses (résoudre pour y=0).
+
+Correction :
+Rayon : 
+Équation : 
+
+Intersection avec y=0 : remplacer y=0 :
+
+(x-2)^2 + (0+1)^2 = 18 \Rightarrow (x-2)^2 +1 =18 \Rightarrow (x-2)^2 =17.
+
+Réponse : équation . Intersections avec l’axe des abscisses :  et .
+
+
+---
+
+Exercice 24 — Trigonométrie (équation)
+
+Énoncé :
+Résoudre sur  l’équation : .
+
+Correction :
+On sait que  lorsque  ou  (puisque sin = √3/2 aux angles π/3 et 2π/3). Donc :
+
+2x = \frac{\pi}{3} + 2k\pi \Rightarrow x = \frac{\pi}{6} + k\pi.
+
+2x = \frac{2\pi}{3} + 2k\pi \Rightarrow x = \frac{\pi}{3} + k\pi.  Pour , prendre k=0,1 :
+
+Pour x = π/6 + kπ : k=0 → x=π/6 ; k=1 → x=π/6 + π = 7π/6 (ok).
+
+Pour x = π/3 + kπ : k=0 → x=π/3 ; k=1 → x=π/3 + π = 4π/3.
+
+
+Solutions sur [0,2π[ : 
+
+
+---
+
+Exercice 25 — Probabilités conditionnelles
+
+Énoncé :
+Une urne contient 3 boules rouges et 2 boules bleues. On tire successivement 2 boules sans remise. On note R = événement « boule rouge », B = « boule bleue ».
+
+1. Calculer .
+
+
+2. Calculer .
+
+
+3. Calculer .
+
+
+
+Correction :
+
+1. 
+
+
+2. 
+
+
+3. 
+
+Donc 
+
+
+
+Réponses : 1) . 2) . 3) .
+
+
+---
+
+Exercice 26 — Fonctions et équations (logique)
+
+Énoncé :
+On considère la fonction  définie sur ℝ{1}.
+
+1. Résoudre l’équation .
+
+
+2. Étudier la bijectivité locale : existe-t-il un x tel que f(x)=x ? (résoudre ).
+
+
+
+Correction :
+
+1.  Vérif x≠1 → ok.
+
+
+2. Résoudre . Multiplier : x+1 = x(x-1) = x^2 - x ⇒ 0 = x^2 - x - x -1 = x^2 -2x -1 ⇒ équation quadratique  Δ = 4 +4 =8. Racines :  Vérifier x≠1 OK. Donc il existe deux réels fixes  et .
+
+
+
+Réponses : 1) x=3. 2) Réels fixes : 
+
+
+---
+
+Exercice 27 — Statistiques (variance et écart-type)
+
+Énoncé :
+Les notes d’un élève sur 5 devoirs sont : 12 ; 14 ; 11 ; 13 ; 10.
+
+1. Calculer la moyenne.
+
+
+2. Calculer la variance  et l’écart-type  (population, pas d’échantillon). Donner les valeurs arrondies à 2 décimales.
+
+
+
+Correction :
+
+1. Moyenne : 
+
+
+2. Variance (population) :  Calcul des écarts :
+
+
+
+(12−12)² = 0
+
+(14−12)² = 4
+
+(11−12)² = 1
+
+(13−12)² = 1
+
+(10−12)² = 4
+
+
+Somme = 0+4+1+1+4 =10. Donc  Écart-type 
+
+Arrondis : variance = 2,00, écart-type ≈ 1,41.
+
+
+---
+
+Exercice 28 — Suites récurrentes simples (convergence)
+
+Énoncé :
+Définir la suite  avec .
+
+1. Calculer .
+
+
+2. Montrer que la suite converge et trouver la limite L.
+
+
+
+Correction :
+
+1. Calcul :
+
+
+
+
+
+
+
+
+
+
+2. Suite linéaire affine de la forme  avec ,  donc converge vers  vérifiant  ⇒  ⇒  Cette limite est 6. On peut voir les termes s’approchent : 0, 3, 4.5, 5.25, … → 6.
+
+
+
+Réponses : . Limite .
+
+
+---
+
+Exercice 29 — Géométrie (similarité)
+
+Énoncé :
+Dans un triangle ABC, M est le milieu de [AB] et N le milieu de [AC]. La droite MN coupe BC en P.
+
+1. Montrer que MN est parallèle à BC.
+
+
+2. En déduire que  est semblable à  et donner le rapport d’échelle.
+
+
+
+Correction :
+
+1. Dans un triangle, le segment joignant les milieux des deux côtés est parallèle au troisième côté (théorème du milieu). Donc MN ∥ BC.
+
+
+2. Si MN ∥ BC, alors les angles correspondants sont égaux : ∠A est commun, ∠AMN = ∠ABC, etc. Donc les triangles AMN et ABC sont semblables. Rapport d’homothétie : AM/AB = 1/2 (puisque M est milieu), de même AN/AC = 1/2. Donc tout côté de AMN est la moitié du côté correspondant de ABC : rapport = 1/2.
+
+
+
+Réponse : MN ∥ BC ;  avec rapport .
+
+
+---
+
+Exercice 30 — Problème concret (optimisation simple)
+
+Énoncé :
+On veut construire un rectangle de périmètre 100 cm. Parmi tous ces rectangles, quel(s) rectangle(s) a/ont l’aire maximale ? Calculer l’aire maximale.
+
+Correction :
+Soit côtés x et y, 2(x+y)=100 ⇒ x+y=50 ⇒ y = 50 − x. Aire A(x) = x(50−x) = 50x − x². C’est une parabole concave (coefficient −1). Sommet en . Donc x=25 ⇒ y=25 (carré). Aire maximale A(25) = 25·25 = 625 cm².
+
+Réponse : le rectangle de plus grande aire est le carré 25×25, aire maximale 625 cm².
+    
+    
+    PHYSIQUE SECONDE
+Physique — Exercices complexes (1 → 10)
+
+
+---
+
+Exercice 1 — Mouvement rectiligne uniformément accéléré
+
+Énoncé :
+Une voiture part du repos et accélère uniformément avec une accélération .
+
+1. Donner l’équation horaire de sa position , en supposant .
+
+
+2. Calculer la distance parcourue en 5 s.
+
+
+3. Calculer la vitesse au bout de 5 s.
+
+
+
+Correction :
+
+1. 
+
+
+2. En 5 s : 
+
+
+3. Vitesse : 
+
+
+
+Réponse : , distance 25 m, vitesse 10 m/s.
+
+
+---
+
+Exercice 2 — Chute libre
+
+Énoncé :
+Un objet est lâché sans vitesse initiale d’une hauteur de 20 m. On prend .
+
+1. Équation horaire .
+
+
+2. Temps de chute.
+
+
+3. Vitesse d’impact.
+
+
+
+Correction :
+
+1. 
+
+
+2. Impact lorsque y=0 : 
+
+
+3. Vitesse : 
+
+
+
+Réponse : chute en 2 s, vitesse d’impact 20 m/s.
+
+
+---
+
+Exercice 3 — Dynamique (2ᵉ loi de Newton)
+
+Énoncé :
+Une caisse de masse 10 kg est tirée sur un sol horizontal sans frottement par une force .
+
+1. Calculer l’accélération.
+
+
+2. Déterminer la vitesse au bout de 4 s si elle part du repos.
+
+
+
+Correction :
+
+1. 
+
+
+2. Vitesse : 
+
+
+
+Réponse : , vitesse après 4 s = 20 m/s.
+
+
+---
+
+Exercice 4 — Énergie mécanique
+
+Énoncé :
+Un objet de masse 2 kg est lancé verticalement vers le haut avec une vitesse initiale de 20 m/s ().
+
+1. Calculer l’altitude maximale atteinte.
+
+
+2. Vérifier par conservation de l’énergie.
+
+
+
+Correction :
+
+1. À la hauteur max, v=0. Utiliser .
+ ⇒ 
+
+
+2. Énergie cinétique initiale .
+Énergie potentielle max = . OK.
+
+
+
+Réponse : hauteur maximale 20 m.
+
+
+---
+
+Exercice 5 — Travail d’une force
+
+Énoncé :
+Un objet de 5 kg est déplacé horizontalement de 8 m sous l’action d’une force constante  parallèle au déplacement.
+Calculer le travail de la force et l’énergie cinétique acquise.
+
+Correction :
+Travail : 
+Variation énergie cinétique = travail = 80 J.
+
+Réponse : Travail = 80 J, énergie cinétique gagnée = 80 J.
+
+
+---
+
+Exercice 6 — Pression et force
+
+Énoncé :
+Un plongeur descend à 30 m de profondeur dans l’eau (ρ=1000 kg/m³, g=10).
+
+1. Calculer la pression due à l’eau à cette profondeur.
+
+
+2. Ajouter la pression atmosphérique (1,0×10⁵ Pa).
+
+
+3. En déduire la pression totale.
+
+
+
+Correction :
+
+1. Pression hydrostatique : 
+
+
+2. Pression totale = 
+
+
+
+Réponse : 
+
+
+---
+
+Exercice 7 — Optique (lentilles)
+
+Énoncé :
+Une lentille convergente de focale  reçoit un objet à 30 cm devant elle.
+
+1. Calculer la distance focale image (formule de Descartes).
+
+
+2. Déterminer la nature de l’image.
+
+
+
+Correction :
+Formule : .
+Avec p=30 cm (objet), f=10 cm.
+
+Donc 
+
+Image à 7,5 cm derrière la lentille, réelle et inversée.
+
+
+---
+
+Exercice 8 — Électricité (loi d’Ohm)
+
+Énoncé :
+Un circuit simple est composé d’un générateur 12 V et d’une résistance R=6 Ω.
+
+1. Calculer l’intensité du courant.
+
+
+2. Calculer la puissance dissipée par la résistance.
+
+
+
+Correction :
+
+1. 
+
+
+2. 
+
+
+
+Réponse : I=2 A, P=24 W.
+
+
+---
+
+Exercice 9 — Champ électrique
+
+Énoncé :
+Deux charges ponctuelles de  et  sont placées à 1,0 m l’une de l’autre.
+
+1. Calculer la force électrostatique entre elles ().
+
+
+2. Indiquer son sens.
+
+
+
+Correction :
+
+Deux charges positives → force répulsive.
+
+Réponse : F=0,054 N, répulsive.
+
+
+---
+
+Exercice 10 — Ondes sonores
+
+Énoncé :
+Une onde sonore a une vitesse  et une fréquence de 170 Hz.
+
+1. Calculer sa longueur d’onde.
+
+
+2. Quelle est la fréquence perçue si la sour
