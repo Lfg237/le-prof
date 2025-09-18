@@ -60,7 +60,7 @@ main {padding:20px;}
 </header>
 
 <div class="banner">
-  <span>🎉 Préparez vos examens et concours ! Nouvelle offre premium disponible !votre repetiteur en ligne  Contactez l'admin. facebook facilitateurs what's:651475255 🎉</span>
+  <span>🎉 Préparez vos examens et concours ! Nouvelle offre premium disponible ! Contactez l'admin. 🎉</span>
 </div>
 
 <main>
@@ -106,833 +106,395 @@ setInterval(updateClock,1000);
 updateClock();
 
 // --- Livres ---
-
-    const booksData = [
+const booksData = [
   {
-    id:0,
-    title:"terminal general",
-    pages:[`
-     
-📚 Chimie Terminale – Exercices Complexes 1 à 10
-Exercice 1 – Oxydoréduction et stœchiométrie
-
-Énoncé :
-On mélange 50 mL de solution de Fe²⁺ 0,2 M avec 25 mL de solution de MnO₄⁻ 0,1 M en milieu acide :
-5 Fe²⁺ + MnO₄⁻ + 8 H⁺ → 5 Fe³⁺ + Mn²⁺ + 4 H₂O
-
-1. Déterminer le réactif limitant
-2. Calculer le nombre de moles de Fe³⁺ formé
-3. Concentration finale de Fe³⁺ dans le mélange
-Solution :
-
-n(Fe²⁺)=0,05*0,2=0,01 mol
-
-n(MnO₄⁻)=0,025*0,1=0,0025 mol
-
-Stœchiométrie : 5 Fe²⁺ / 1 MnO₄⁻ → 0,01/5=0,002 < 0,0025 → Fe²⁺ limitant
-
-moles Fe³⁺ formées = 0,01 mol
-
-volume total = 50+25=75 mL=0,075 L → C(Fe³⁺)=0,01/0,075≈0,133 M
-
-Exercice 2 – Titrage polyprotonique
-
-Énoncé :
-50 mL d’H₃PO₄ 0,1 M titré par NaOH 0,1 M.
-
-1. Volume de NaOH pour chaque point équivalent
-2. pH au 1er point équivalent
-Solution :
-
-n(H₃PO₄)=0,05*0,1=0,005 mol
-
-1er équivalent : 1 NaOH/H₃PO₄ → V=0,005/0,1=50 mL
-
-2ème équivalent : 2 NaOH/H₃PO₄ → V=100 mL
-
-3ème équivalent : 3 NaOH/H₃PO₄ → V=150 mL
-
-pH 1er point : solution H₂PO₄⁻ → pH ≈ pKa₁=2,12
-Exercice 3 – Substitution nucléophile
-
-Énoncé :
-CH₃CH₂CH₂OH + HBr → ?
-
-Solution :
-
-Type : SN1/SN2
-Produit : CH₃CH₂CH₂Br
-Mécanisme :
-1. Protonation OH → OH₂⁺
-2. Départ H₂O → carbocation
-
-3. Attaque Br⁻ → CH₃CH₂CH₂Br
-
-Exercice 4 – Électrolyse
-
-Énoncé :
-Électrolyse d’une solution CuSO₄ 0,5 M avec I=2 A pendant 30 min.
-
-Solution :
-
-Q=It=21800=3600 C
-
-n(Cu)=Q/(2F)=3600/(296485)≈0,0187 mol
-
-m=0,0187*63,5≈1,187
-Exercice 5 – Équilibre chimique
-
-Énoncé :
-0,05 mol NH₄Cl dans 1 L d’eau. Ka(NH₄⁺)=5,6×10⁻¹⁰
-
-Solution :
-
-NH₄⁺ ⇌ NH₃ + H⁺
-
-[H⁺]=√(KaC)=√(5,6e-100,05)≈5,29e-6
-
-pH=-log[H⁺]≈5,28
-
-Ajout NH₄OH 0,05 M → solution tampon → pH≈pKa+log([NH₃]/[NH₄⁺])
-Exercice 6 – Oxydoréduction complexe
-
-Énoncé :
-Équilibrer et calculer Δn d’électrons :
-Cr₂O₇²⁻ + Fe²⁺ → Cr³⁺ + Fe³⁺ en milieu acide
-
-Solution :
-
-Demi-équations :
-
-Cr₂O₇²⁻ + 14 H⁺ + 6 e⁻ → 2 Cr³⁺ + 7 H₂O
-
-Fe²⁺ → Fe³⁺ + e⁻
-
-Multiplication : Fe²⁺*6 → 6 e⁻ → équilibre
-Exercice 7 – Titrage acide faible/base faible
-
-Énoncé :
-50 mL d’acide acétique 0,1 M titré par NaOH 0,1 M.
-
-Solution :
-
-n(CH₃COOH)=0,05*0,1=0,005 mol
-
-1er équivalent : n=0,005 → V=0,005/0,1=50 mL
-
-pH à moitié équivalence : pH=pKa=4,76
-Exercice 8 – Réaction d’addition
-
-Énoncé :
-CH₂=CH-CH₃ + HBr → ?
-
-Solution :
-
-Addition électrophile
-
-Produit principal : CH₃-CHBr-CH₃ (Markovnikov)
-Exercice 9 – Chimie organique : oxydation
-
-Énoncé :
-CH₃CH₂OH + [O] → ?
-
-Solution :
-
-Oxydation primaire → CH₃CHO (acétaldéhyde)
-
-Si oxydant fort → CH₃COOH (acide acétique)
-Exercice 10 – Solubilité et saturation
-
-Énoncé :
-Solubilité AgNO₃=215 g/L à 25°C.
-Masse maximale dissoute dans 0,5 L
-Solution :
-
-215 g → 1 L
-
-0,5 L → 215*0,5=107,5 g
-Si tu veux, je peux continuer directement avec les exercices 11 à 50, tous très complexes, prêts à copier-coller, avec
-
-Calculs détaillés multi-étapes
-
-Mécanismes chimiques et équilibres
-
-Schémas ASCII pour les molécules
-
-Émojis et annotations
-Veux‑tu que je fasse ça ?
-    
-1. Calculer la vitesse juste avant de toucher le sol.
-
-2. Temps de chute. (g = 9,8 m/s²)
-
-Solution :
-
-v = √(2gh) = √(29,845) ≈ √882 ≈ 29,7 m/s
-
-t = √(2*h/g) = √(90/9,8) ≈ √9,18 ≈ 3,03 s
-
-Exercice 2 – Mouvement parabolique
-
-Énoncé :
-Un projectile est lancé à 20 m/s avec un angle de 30° par rapport à l’horizontale.
-
-1. Calculer la portée
-
-2. Hauteur maximale
-
-Solution :
-
-vx = 20*cos30 ≈ 17,32 m/s
-
-vy = 20*sin30 = 10 m/s
-
-Hauteur max : H = vy²/(2*g) = 100/(19,6) ≈ 5,10 m
-
-Temps total : t = 2*vy/g = 20/9,8 ≈ 2,04 s
-
-Portée : x = vxt = 17,322,04 ≈ 35,3 m
-
-Exercice 3 – Loi de Newton et force
-
-Énoncé :
-Un bloc de 5 kg est tiré avec une force de 30 N sur un plan horizontal sans frottement.
-
-1. Accélération
-2. Vitesse après 4 s
-Solution :
-
-a = F/m = 30/5 = 6 m/s²
-
-v = at = 64 = 24 m/s
-
-Exercice 4 – Travail et énergie
-Énoncé :
-Une masse de 2 kg est soulevée verticalement de 5 m.
-
-1. Travail de la force gravitationnelle
-2. Énergie potentielle acquise
-Solution 
-W = mgh = 29,85 = 98 J
-Eₚ = mgh = 98 J
-Exercice 5 – Mouvement circulaire
-Énoncé :
-Une voiture de 800 kg prend un virage de rayon 50 m à 20 m/s.
-1. Force centripète
-
-2. Accélération centripète
-
-Solution :
-a = v²/r = 400/50 = 8 m/s²
-F = ma = 8008 = 6400 N
-Exercice 6 – Électricité : résistance équivalente
-Énoncé :
-Trois résistances 6 Ω, 12 Ω et 18 Ω sont en série et une autre en parallèle avec cette série. Calculer la résistance équivalente.
-Solution :
-Série : Rs = 6+12+18=36 Ω
-Parallèle avec Rp (supposons Rp=36 Ω) : 1/Req = 1/36 + 1/36 = 1/18 → Req = 18 Ω
-Exercice 7 – Loi d’Ohm
-Énoncé :
-Une lampe de 60 W fonctionne sous 220 V.
-1. Intensité traversant la lampe
-2. Résistance de la lampe
-Solution :
-I = P/V = 60/220 ≈ 0,273 A
-R = V/I = 220/0,273 ≈ 805 Ω
-Exercice 8 – Optique : lentille convergente
-Énoncé :
-Une lentille de 20 cm de distance focale. Un objet est placé à 30 cm.
-1. Position de l’image
-2. Grandissement
-Solution :
-1/f = 1/p + 1/p’ → 1/20 = 1/30 + 1/p’ → 1/p’=0,05-0,0333=0,0167 → p’≈60 cm
-Grandissement : G = -p’/p = -60/30=-2
-Exercice 9 – Thermodynamique
-Énoncé :
-0,5 mol de gaz parfait monoatomique subit une expansion isotherme à 300 K et son volume passe de 2 L à 5 L.
-1. Travail effectué par le gaz
-2. Énergie interne
-W = nRTln(Vf/Vi) = 0,58,314300ln(5/2) ≈ 4157 J
-
-Énergie interne ΔU = 0 (isotherme)
-Exercice 10 – Ondes
-Énoncé :
-Une onde sinusoïdale a f = 50 Hz et λ = 2 m.
-1. Vitesse de propagation
-
-2. Période
-Solution :
-
-v = fλ = 502 = 100 m/s
-
-T = 1/f = 1/50 = 0,02 s
-===================================================
-📌 EXERCICES TERMINALE – Partie 1 à 40
-===================================================
-
-Exercice 1 – Fonction et dérivée
-Énoncé :
-f(x) = x³ - 6x² + 9x + 1
-1. Étudier les variations
-2. Déterminer les extrema
-3. Tracer le graphique
-
-Solution :
-- f'(x) = 3x² -12x +9 = 3(x-1)(x-3)
-- Signe : croissante sur ]-∞,1[, décroissante sur ]1,3[, croissante sur ]3,+∞[
-- Extrema : max f(1)=5, min f(3)=1
-
-Graphique ASCII :
-y
-^
-|          * (1,5)
-|         *
-|        *
-|       *
-|      *
-|     *
-|    *
-|   *
-|  *
-| *
-|*        
-+-----------------> x
-0    1    3    5
-         * (3,1)
-
-Exercice 2 – Suites et limites
-Énoncé :
-Suite : u0 = 2, un+1 = 1/2 un +1
-1. Montrer convergence
-2. Déterminer la limite
-
-Solution :
-- Monotone, convergente
-- Limite : L = 2
-
-Exercice 3 – Probabilités
-Énoncé :
-Sac avec 5 boules rouges et 3 boules vertes, tirage de 2 sans remise.
-1. Probabilité que les deux soient rouges
-2. Probabilité qu’au moins une soit verte
-
-Solution :
-- P(RR) = 5/14
-- P(au moins une verte) = 9/14
-
-Exercice 4 – Géométrie dans l’espace
-Énoncé :
-Cube de côté 2 cm, calculer AC et AG
-
-Solution :
-- AC = 2√2 cm
-- AG = 2√3 cm
-
-Schéma ASCII :
-E--------F
-|\       |\
-| \      | \
-|  H-----|--G
-|  |     |  |
-A--|-----B  |
- \ |      \ |
-  D---------C
-
-Exercice 5 – Intégrale
-Énoncé :
-Calculer ∫0^2 (3x² - 4x +1) dx
-
-Solution :
-∫0² 3x² dx = 8
-∫0² -4x dx = -8
-∫0² 1 dx = 2
-Résultat = 2
-Exercice 6 – Trigonométrie
-Énoncé :
-Résoudre sin x + √3 cos x =0 sur [0,2π]
-
-Solution :
-tan x = -√3 → x = 2π/3, 5π/3
-Exercice 7 – Matrices
-Énoncé :
-A = [[1,2],[3,4]].
-Calculer det(A) et A^-1
-
-Solution :
-- det(A) = -2
-- A^-1 = [[-2,1],[1.5,-0.5]]
-Exercice 8 – Équations
-Énoncé :
-x² -5x +6 =0
-
-Solution :
-(x-2)(x-3)=0 → x=2 ou x=3
-
-Exercice 9 – Probabilités conditionnelles
-Énoncé :
-Sac 3 rouges, 2 bleues, tirage avec remise.
-1. Deux rouges
-2. Deuxième rouge sachant première rouge
-
-Solution :
-P(RR) = 9/25, P(R2|R1) = 3/5
-Exercice 10 – Problème concret
-Énoncé :
-Rectangle, périmètre 20 cm, aire 24 cm² → dimensions ?
-
-Solution :
-L+l=10, L*l=24 → L=6, l=4 ou L=4, l=6
-
-Exercice 11 – Fonction polynomiale
-Énoncé :
-f(x) = x³ - 9x + 1
-1. Calculer f'(x)
-2. Étudier les variations
-3. Déterminer les extrema
-
-Solution :
-f'(x) = 3x² -9 = 3(x-√3)(x+√3)
-Signe : décroissante sur ]-√3, √3[, croissante ailleurs
-Extrema : max f(-√3)≈16, min f(√3)≈-16
-Exercice 12 – Limite
-Énoncé :
-lim(x→+∞) (3x² + 2x -1)/(x² - x +1)
-
-Solution :
-lim = 3
-
-Exercice 13 – Suite
-Énoncé :
-u₀ = 1, uₙ₊₁ = uₙ + 1/n
-1. Vérifier si la suite est croissante
-2. Conjecturer la limite
-
-Solution :
-uₙ₊₁ - uₙ = 1/n >0 → croissante
-uₙ → +∞ (divergente)
-
-Exercice 14 – Probabilités
-Énoncé :
-Lancer un dé à 6 faces.
-1. Probabilité d’obtenir un nombre pair
-2. Probabilité d’obtenir un multiple de 3
-
-Solution :
-P(nombre pair) = 3/6 = 1/2
-P(multiple de 3) = 2/6 = 1/3
-Exercice 15 – Triangle
-Énoncé :
-Triangle ABC rectangle en A, AB=3 cm, AC=4 cm. Calculer BC.
-
-Solution :
-BC² = AB² + AC² = 3² +4²=9+16=25 → BC=5 cm
-Exercice 16 – Dérivée
-Énoncé :
-f(x) = e^x * sin(x)
-1. Calculer f'(x)
-2. Déterminer les points où f'(x)=0
-
-Solution :
-f'(x) = e^x(sin x + cos x)
-f'(x)=0 → sin x + cos x=0 → tan x = -1 → x=-π/4 + kπ
-Exercice 17 – Intégrale simple
-Énoncé :
-∫₀¹ (2x+1) dx
-
-Solution :
-∫ (2x+1) dx = x² + x → de 0 à1 : 1² +1 -0=2
-
-Exercice 18 – Équations trigonométriques
-Énoncé :
-Résoudre cos(2x)=1/2 sur [0,2π]
-
-Solution :
-2x=π/3, 5π/3 → x=π/6, 5π/6, 7π/6, 11π/6
-
-Exercice 19 – Probabilités conditionnelles
-Énoncé :
-Sac 3 rouges,2 vertes,2 tirages sans remise.
-P(2e verte | 1e rouge) = 3/8
-Exercice 20 – Problème concret
-Énoncé :
-Rectangle : L=5 cm, l=3 cm
-P = 16 cm, A = 15 cm²
-
-
-
-`,
-      `🔗 Page 3 du Livre 1 avec lien : <a href="https://example.com" target="_blank">Clique ici</a>`
+    id: 0,
+    title: 'Livre 1',
+    pages: [
+      `⭐ Bienvenue dans le Livre 1 🎉📚`,
+      `📖 Exemple de page 2 du Livre 1`,
+      `🔗 Ressource : <a href='https://example.com' target='_blank'>Clique ici 🌐</a>`
     ]
   },
   {
-    id:1,
-    title:"terminal technique",
-    pages:[
-      `⭐ Page 1 du Livre 2`,
-      `📖 Page 2 du Livre 2`,
-      `🔗 Page 3 du Livre 2`    ]
-  },
-    {
-    id:2,
-    title:"prémiére general",
-    pages:[
-      `⭐ Super — voici 10 exercices de Mathématiques niveau Première (avancés / prêt à copier-coller), chacun immédiatement suivi de sa correction détaillée. Pas de commentaires superflus, directement efficace.
-
-
----
-
-Maths — Niveau Première (Ex. 1 → 10)
-
-
----
-
-Exercice 1 — Étude de fonction
-
-Soit .
-
-1. Calculer .
-
-
-2. Trouver les intervalles de monotonicité et les extremums.
-
-
-
-Correction 1
-
-Racines dérivée  et . Tableau de signes de  :  pour  et ,  pour .
-Donc  croît sur  et , décroit sur . Extremums : maximum local en  : . Minimum local en  : .
-
-
----
-
-Exercice 2 — Limite
-
-Calculer .
-
-Correction 2
-Diviser num. et denom. par  : limite = 
-
-
----
-
-Exercice 3 — Équation exponentielle
-
-Résoudre .
-
-Correction 3
-Poser . .  ou . Donc  ou .
-
-
----
-
-Exercice 4 — Dérivée et tangente
-
-Soit  (défini sur ).
-
-1. Calculer .
-
-
-2. Équation de la tangente en .
-
-
-
-Correction 4
-. 
-  Tangente :  → 
-
-
----
-
-Exercice 5 — Suite et convergence
-
-Suite définie par  et .
-
-1. Calculer .
-
-
-2. Déterminer la limite .
-
-
-
-Correction 5
-  
-Limite  vérifie 
-
-
----
-
-Exercice 6 — Résolution d’inéquation
-
-Résoudre .
-
-Correction 6
-Domaines : . .  Vérification ok.
-
-
----
-
-Exercice 7 — Probabilités
-
-On lance deux dés équilibrés. Soit  = «somme = 8»,  = «au moins un dé = 6». Calculer .
-
-Correction 7
-Évènements élémentaires : total 36.  = configurations avec au moins un 6 : nombre =  ? (calculer correctement) : nombre de tirages sans 6 =  → donc avec au moins un 6 = 11.  (somme 8) : couples (2,6),(3,5),(4,4),(5,3),(6,2) → 5 cas. Parmi ces, ceux satisfaisant  (au moins un 6) : (2,6) et (6,2) → 2 cas. Donc 
-
-
----
-
-Exercice 8 — Géométrie analytique
-
-Droite  : . Point . Trouver la projection orthogonale  de  sur .
-
-Correction 8
-Droite  a vecteur directeur  ? Non pente 2 ⇒ vecteur directeur . Vecteur normal  (car 2x - y -1 =0 form). Forme cartésienne : . Projection  : résoudre système de droite d et droite passant par A de direction n :
-Droite orthogonale passant par A :  →  → . Intersection avec  : soustraire → (2x - y) - (2x - y -1) = 0 - 0 ⇒ 1 = 0? méthode directe : résoudre système
- et . Soustraction donne  — erreur signe. Refaire correctement : vecteur normal à d est  car d : y=2x-1 → 2x - y -1 =0. Droite orthogonale passant par A : équation  ⇒  ⇒  Intersection systeme :
-2x - y -1 =0
-2x - y =0
-Soustraction : (2x - y) - (2x - y -1) = 0 - 0 ⇒ 1=0 impossible — contradiction due algebraique due to algebraic mistake: actually second eq is 2x - y =0 ; first is 2x - y -1 =0 ; they are parallel distinct, so orthogonale? That cannot be: two lines with same left side differ by constant, so they are parallel — means constructed orthogonal line is parallel to d which is impossible. So mistake: vector normal to d is ( -2,1 )? Let's recompute cleanly via projection formula.
-
-Line d: y = 2x -1. Unit direction vector of d: . Projection of A onto d: H = point on d with parameter t such that vector AH is orthogonal to u. Parametric of d: . Solve dot( M(t)-A , direction u )? Simpler: minimize distance squared: φ(t) = (t-1)^2 + (2t-1 -2)^2 = (t-1)^2 + (2t-3)^2. Derivative: 2(t-1)+2(2t-3)2 = 0 ⇒ 2(t-1)+4(2t-3)=0 ⇒ 2t-2 +8t -12 =0 ⇒10t -14 =0 ⇒ t = 1.4. Then H = (1.4, 21.4 -1 = 2.8 -1 =1.8). So H(1.4,1.8).
-
-I'll present corrected solution succinctly.
-
-Correction 8 (final)
-Paramétrisation . Minimiser .  Donc 
-
-
----
-
-Exercice 9 — Dérivée seconde
-
-Soit . Calculer  et .
-
-Correction 9
-
-
-
-
----
-
-Exercice 10 — Intégrale (aire)
-
-Calculer l’aire de la surface limitée par la courbe  et l’axe des abscisses.
-
-Correction 10
-Zéros de la fonction :  → 0 et 2. Aire =  Valeur négative signifie fonction <0 sur (0,2). Aire positive = 
-
-
----
-
-Si tu veux une autre série (ex. 11→20) — plus axée sur probabilités, statistiques, fonctions trigonométriques ou exercices type bac — je continue tout de suite.
-
-`,
-      `📖 Page 2 du Livre 2`,
-      `🔗 Page 3 du Livre 2`
-    ]
-    },
-  {
-    id:3,
-    title:"premiére technique",
-    pages:[
-      `⭐ Page 1 du Livre 3`,
-      `📖 Page 2 du Livre 3`,
-      `🔗 Page 3 du Livre 3`
+    id: 1,
+    title: 'Livre 2',
+    pages: [
+      `⭐ Bienvenue dans le Livre 2 🎉📚`,
+      `📖 Exemple de page 2 du Livre 2`,
+      `🔗 Ressource : <a href='https://example.com' target='_blank'>Clique ici 🌐</a>`
     ]
   },
   {
-    id:4,
-    title:"2nd général",
-    pages:[
-      `⭐ Page 1 du Livre 3`,
-      `📖 Page 2 du Livre 3`,
-      `🔗 Page 3 du Livre 3`
+    id: 2,
+    title: 'terminal general',
+    pages: [
+      `⭐ exercice de maths 
+
+Exercice : Dérivées et fonctions
+
+Soit la fonction  définie sur  par :
+
+f(x) = x^3 - 6x^2 + 9x + 1
+
+1. Calculer la dérivée .
+
+
+2. Étudier le signe de  et en déduire les intervalles de croissance et de décroissance de .
+3. Déterminer les points critiques et les extrema de la fonction.
+Solution
+
+1. Dérivée :
+f'(x) = 3x^2 - 12x + 9
+2. Étude du signe :
+On résout  :
+3x^2 - 12x + 9 = 0 \implies x^2 - 4x + 3 = 0
+
+(x-1)(x-3) = 0 \implies x = 1 \text{ ou } x = 3 
+
+Pour ,  →  croissante.
+
+Pour ,  →  décroissante.
+Pour ,  →  croissante.
+3. Points critiques et extrema :
+ : maximum local → 
+
+ : minimum local → 
+
+
+Conclusion :
+
+La fonction est croissante sur 
+
+Elle est décroissante sur 
+
+Maximum local : 
+
+Minimum local : 
+
+🎉📚`,
+      `📖 Exemple de page 2 du Livre 3`,
+      `🔗 Ressource : <a href='https://maths-pdf.fr/exercices-de-maths-terminale🌐</a>`
     ]
   },
-    {
-    id:5,
-    title:"2nde technique",
-    pages:[
-      `⭐ MMATHS
-      Super — je reprends les 10 exercices de Seconde et je te fournis les corrections détaillées (pas à pas). Tu peux tout copier-coller directement.
+  {
+    id: 3,
+    title: 'premiere',
+    pages: [
+      `⭐ Parfait ! Voici un exercice de maths 
 
+Exercice : Étude de fonction et équation
 
----
+Soit la fonction  définie sur  par :
 
-Exercices de Mathématiques — Niveau Seconde (énoncés + CORRECTIONS)
+f(x) = x^2 - 4x + 3
 
+1. Déterminer la dérivée .
 
----
 
-Exercice 1 – Équations du premier degré
+2. Étudier le sens de variation de .
 
-1. Résoudre .
 
+3. Résoudre .
 
 
-Solution :
+4. Déterminer les coordonnées du minimum de .
 
-5x-7=3x+9 \\
-5x-3x=9+7 \\
-2x=16 \\
-x=8.
+Solution
 
+1. Dérivée :
 
----
 
-2. Résoudre .
 
+f'(x) = 2x - 4
 
+2. Étude du sens de variation :
 
-Solution :
 
-7(2x-3)=14x-21 \\
-14x-21 = 4x+11 \\
-14x-4x=11+21 \\
-10x=32 \\
-x=\frac{32}{10}=\frac{16}{5}=3{,}2.
 
+On résout  :
 
----
 
-Exercice 2 – Équation produit nul
+2x - 4 = 0 \implies x = 2
 
-Résoudre .
+Pour ,  →  croissante
 
-Solution : Produit nul ⇒ au moins un facteur nul.
 
-x-2=0 \Rightarrow x=2;\\
-x+5=0 \Rightarrow x=-5;\\
-3x-7=0 \Rightarrow x=\frac{7}{3}.
+Donc  décroît sur  et croît sur .
 
+3. Résolution de  :
 
----
 
-Exercice 3 – Inéquation
 
-Résoudre .
+x^2 - 4x + 3 = 0 \implies (x-1)(x-3) = 0 \implies x = 1 \text{ ou } x = 3
 
-Solution :
+4. Minimum de  :
 
-3x-4 \le 2x+5 \\
-3x-2x \le 5+4 \\
-x \le 9.
 
 
----
+Minimum atteint en  :
 
-Exercice 4 – Fonction affine
 
-Soit .
+f(2) = 2^2 - 4\cdot 2 + 3 = 4 - 8 + 3 = -1
 
-1. Calculer .
+Conclusion :
 
+Variations : décroissante sur , croissante sur 
 
-2. Donner l’ordonnée à l’origine.
+Zéros :  et 
 
+Minimum : 
+🎉📚`,
+      `📖 rcemplr 4`,
+      `🔗 Ressource : <a href='https://example.com' target='_blank'>Clique ici 🌐</a>`
+    ]
+  },
+  {
+    id: 4,
+    title: '2nd',
+    pages: [
+      `⭐ Parfait ! Voici un exercice de maths pour la classe de Seconde avec son corrigé :
 
+Exercice : Proportionnalité et pourcentages
 
-Solution :
+Une entreprise fabrique des stylos.
 
+En janvier, elle produit 240 stylos.
 
+En février, la production augmente de 25 %.
 
+En mars, elle augmente encore de 20 % par rapport à février.
 
 
+1. Calculer le nombre de stylos produits en février.
 
 
+2. Calculer le nombre de stylos produits en mars.
 
-L’ordonnée à l’origine est .
-La droite a pente  et intercept .
 
-Réponses :  Ordonnée à l’origine = .
-
-
----
-
-Exercice 5 – Identités remarquables
-
-Développer et réduire :
-
-1. 
-
-
-2. 
-
-
-3. 
-
-
-
-Solution :
-
-1. 
-
-
-2. 
-
-
-3. 
-
-
-
-Réponses :
-
-1. 
-
-
-2. 
-
-
-3. 
+3. Déterminer l’augmentation totale de la production entre janvier et mars en pourcentage.
 
 
 
 
 ---
 
-Exercice 6 – Équation du second degré
+Solution
 
-Résoudre .
-
-Solution : Calcul du discriminant 
-Racines :
-
-x = \frac{7 \pm \sqrt{1}}{2} = \frac{7\pm1}{2}.
-
-Réponse :  ou .
-
-
----
-
-Exercice 7 – Géométrie analytique
-
-Points .
-
-1. Calculer AB et AC.
-
-
-2. Déterminer la nature du triangle ABC (isocèle ? rectangle ?).
+1. Production en février :
 
 
 
-Solution :
-Vecteurs et distances :
+240 + 25\% \times 240 = 240 + 60 = 300 \text{ stylos}
 
-\overrightarrow{AB}=(5-1,\ 4-2)=(4,2),\quad AB=\sqrt{4^2+2^2}=\sqrt{16+4}=\sqrt{20}=2\sqrt5\approx4{,}472.
-
-\overrightarrow{AC}=(3-1,\ 8-2)=(2,6),\quad AC=\sqrt{2^2+6^2}=\sqrt{4+36}=\sqrt{40}=2\sqrt{10}\approx6{,}325.  Calculer BC :
-
-\overrightarrow{BC}=(5-3,\ 4-8)=(2,-4),\quad BC=\sqrt{2^2+(-4)^2}=\sqrt{4+16}=\sqrt{20}=2\sqrt5\approx4{,}472.
-
-On constate  donc le triangle est isocèle (les côtés AB et BC égaux).
-
-Vérifons s’il est rectangle : calcul du produit scalaire  :
-
-\overrightarrow{AB}\cdot\overrightarrow{BC} = (4,2)\cdot(2,-4) = 4\cdot2 + 2\cdot(-4) = 8 - 8 = 0.
-
-Conclusion : triangle ABC est isocèle (AB = BC) et rectangle en B.
+2. Production en mars :
 
 
----
 
-Exercice 8 – Statistiques (1
+300 + 20\% \times 300 = 300 + 60 = 360 \text{ stylos}
+
+3. Augmentation totale entre janvier et mars :
+
+
+
+\text{Augmentation} = 360 - 240 = 120
+
+\text{Pourcentage} = \frac{120}{240} \times 100 = 50% 
+
+Conclusion :
+
+Février : 300 stylos
+
+Mars : 360 stylos
+
+Augmentation totale : 50 %
+🎉📚`,
+      `📖 Exemple de page 2 du Livre 5`,
+      `🔗 Ressource : <a href='https://example.com' target='_blank'>Clique ici 🌐</a>`
+    ]
+  },
+  {
+    id: 5,
+    title: '3EM',
+    pages: [
+      `⭐ Parfait ! Voici un exercice de maths pour la classe de 3ᵉ avec son corrigé :
+
+Exercice : Équations et problèmes
+
+Un magasin vend des cahiers à 2 € l’unité et des stylos à 1,50 € l’unité.
+Une cliente achète 5 cahiers et un certain nombre de stylos.
+Elle dépense au total 17 €.
+
+1. Écrire une équation pour déterminer le nombre de stylos achetés.
+2. Résoudre cette équation.
+3. Vérifier le résultat.
+
+Solution
+
+1. Équation :
+Soit  le nombre de stylos achetés.
+2 \times 5 + 1.5 \times x = 17
+
+10 + 1.5x = 17 
+
+2. Résolution :
+
+
+
+1.5x = 17 - 10 = 7
+
+x = \frac{7}{1.5} = \frac{7 \times 2}{3} = \frac{14}{3} \approx 4,67 
+
+Comme on ne peut pas acheter un tiers de stylo, on arrondit au nombre entier le plus proche compatible avec le total exact :
+
+Vérification : si  → total = 10 + 6 = 16 € (trop peu)
+
+Si  → total = 10 + 7,5 = 17,5 € (trop)
+✅ 
+
+🎉📚`,
+      `📖 Exemple de page 2 du Livre 6`,
+      `🔗 Ressource : <a href='https://example.com' target='_blank'>Clique ici 🌐</a>`
+    ]
+  },
+  {
+    id: 6,
+    title: 'Livre 7',
+    pages: [
+      `⭐ Bienvenue dans le Livre 7 🎉📚`,
+      `📖 Exemple de page 2 du Livre 7`,
+      `🔗 Ressource : <a href='https://example.com' target='_blank'>Clique ici 🌐</a>`
+    ]
+  },
+  {
+    id: 7,
+    title: 'Livre 8',
+    pages: [
+      `⭐ Bienvenue dans le Livre 8 🎉📚`,
+      `📖 Exemple de page 2 du Livre 8`,
+      `🔗 Ressource : <a href='https://example.com' target='_blank'>Clique ici 🌐</a>`
+    ]
+  },
+  {
+    id: 8,
+    title: 'Livre 9',
+    pages: [
+      `⭐ Bienvenue dans le Livre 9 🎉📚`,
+      `📖 Exemple de page 2 du Livre 9`,
+      `🔗 Ressource : <a href='https://example.com' target='_blank'>Clique ici 🌐</a>`
+    ]
+  },
+  {
+    id: 9,
+    title: 'Livre 10',
+    pages: [
+      `⭐ Bienvenue dans le Livre 10 🎉📚`,
+      `📖 Exemple de page 2 du Livre 10`,
+      `🔗 Ressource : <a href='https://example.com' target='_blank'>Clique ici 🌐</a>`
+    ]
+  }
+];
+
+// --- Utilisateurs ---
+let users = [
+  {id:'U1001',type:'premium',start:'01/09/2025',end:'30/09/2025',books:[0,1,2]},
+  {id:'U1002',type:'simple',start:'01/09/2025',end:'30/09/2025',books:[0,1]},
+  {id:'U1003',type:'ferme',start:'01/09/2025',end:'30/09/2025',books:[]},
+  {id:'U1000',type:'admin',start:'01/01/2025',end:'31/12/2030',books:[...Array(40).keys()]}
+];
+
+// --- Utilisateur connecté ---
+let currentUser = users[0];
+document.getElementById('userId').textContent = currentUser.id;
+
+// --- Statut utilisateur ---
+function updateStatusButton(){
+  const btn = document.getElementById('userStatus');
+  btn.textContent = currentUser.type.toUpperCase();
+  btn.className = 'status-btn ' +
+    (currentUser.type==='ferme'?'status-ferme':currentUser.type==='simple'?'status-simple':currentUser.type==='premium'?'status-premium':'status-admin');
+}
+updateStatusButton();
+
+function updateUserStatus(){
+  const today = new Date();
+  const start = new Date(currentUser.start.split('/').reverse().join('-'));
+  const end = new Date(currentUser.end.split('/').reverse().join('-'));
+  if(currentUser.type!=='admin'){
+    if(today<start || today>end) currentUser.type='ferme';
+  }
+  updateStatusButton();
+}
+updateUserStatus();
+
+// --- Vérification accès selon abonnement ---
+function canAccessBook(user, bookId){
+  switch(user.type){
+    case 'admin': return true;
+    case 'premium': return true;
+    case 'simple': return user.books.includes(bookId);
+    case 'ferme': return false;
+    default: return false;
+  }
+}
+
+// --- Génération des livres ---
+const booksContainer = document.getElementById('booksContainer');
+booksData.forEach(book=>{
+  const bookDiv = document.createElement('div');
+  bookDiv.className='book';
+  bookDiv.dataset.bookId=book.id;
+  bookDiv.innerHTML = `<h3>${book.title}</h3><div class="pages"></div>`;
+  booksContainer.appendChild(bookDiv);
+
+  const pagesDiv = bookDiv.querySelector('.pages');
+  book.pages.forEach((p,pageIndex)=>{
+    const pageEl = document.createElement('div');
+    pageEl.className='page';
+    pageEl.innerHTML = p;
+    pageEl.querySelectorAll('a').forEach(a=>a.setAttribute('target','_blank'));
+    pageEl.onclick = (e)=>{
+      e.stopPropagation();
+      if(canAccessBook(currentUser,book.id)){
+        alert(p);
+      } else showPopup();
+    };
+    pagesDiv.appendChild(pageEl);
+  });
+
+  bookDiv.onclick = ()=>{
+    document.getElementById('selectedBook').textContent = book.title;
+    pagesDiv.style.display = pagesDiv.style.display==='block'?'none':'block';
+    if(!canAccessBook(currentUser,book.id)) showPopup();
+  };
+});
+
+// --- Popup ---
+function showPopup(){document.getElementById('popupBg').style.display='flex';}
+function closePopup(){document.getElementById('popupBg').style.display='none';}
+
+// --- Tableau Admin ---
+const adminPassword = "233233";
+function adminLogin(){
+  const code = prompt("Entrez le code d'accès administrateur :");
+  if(code===adminPassword){
+    const tbody = document.getElementById('adminTable').querySelector('tbody');
+    tbody.innerHTML = '';
+    users.forEach(u=>{
+      const tr = document.createElement('tr');
+      tr.innerHTML=`<td>${u.id}</td>
+                    <td>${u.type}</td>
+                    <td>${u.start}</td>
+                    <td>${u.end}</td>
+                    <td>${u.books.map(b=>booksData[b]?.title||'').join(', ')}</td>`;
+      tbody.appendChild(tr);
+    });
+    document.getElementById('adminTable').style.display='table';
+  } else {
+    alert('Code incorrect !');
+  }
+}
+</script>
+
+</body>
+</html>
